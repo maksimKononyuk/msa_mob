@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux'
 const Orders = () => {
   const orders = useSelector((state) => state.main.orders)
   return (
-    <View style={{ ...styles.shadow, height: 80 }}>
+    <View style={[styles.shadow, componentStyles.container]}>
       {windowWidth <= 480 ? (
         <ScrollView
           horizontal={true}

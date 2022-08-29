@@ -72,7 +72,7 @@ export const options = {
   },
   text: {
     fontFamily: 'Montserrat',
-    fontSize: 30,
+    fontSize: windowWidth <= 480 ? 30 : 46,
     color: '#fff'
   }
 }

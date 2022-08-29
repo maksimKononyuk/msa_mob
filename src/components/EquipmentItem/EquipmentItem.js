@@ -45,20 +45,22 @@ const EquipmentItem = ({ index }) => {
       style={styles.container}
       onPress={itemHandler}
     >
-      <View
-        style={[
-          styles.checkIcon,
-          { backgroundColor: isChecked[index] ? '#0080FF' : '#F2F2F2' }
-        ]}
-      >
-        {isChecked[index] && (
-          <Image
-            source={require('../../assets/images/ok.png')}
-            style={styles.okButton}
-          />
-        )}
+      <View style={styles.checkAndTitleContainer}>
+        <View
+          style={[
+            styles.checkIcon,
+            { backgroundColor: isChecked[index] ? '#0080FF' : '#F2F2F2' }
+          ]}
+        >
+          {isChecked[index] && (
+            <Image
+              source={require('../../assets/images/ok.png')}
+              style={styles.okButton}
+            />
+          )}
+        </View>
+        <Text style={styles.title}>{title}</Text>
       </View>
-      <Text style={styles.title}>{title}</Text>
       <View style={[styles.busy, { opacity: isBusy ? 1 : 0 }]}>
         <Text style={styles.busyText}>busy</Text>
       </View>

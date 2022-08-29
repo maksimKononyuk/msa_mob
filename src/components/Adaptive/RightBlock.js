@@ -1,9 +1,10 @@
 import React from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import { View, Text } from 'react-native'
 import { useSelector } from 'react-redux'
 import OperationContainer from '../OperationContainer/OperationContainer'
 import StartFinishButton from '../StartFinishButton/StartFinishButton'
 import Timer from '../Timer/Timer'
+import styles from './stylesRightBlock'
 
 const RightBlock = ({ startOrder }) => {
   const previousOperation = useSelector((state) => state.main.previousOperation)
@@ -48,34 +49,5 @@ const RightBlock = ({ startOrder }) => {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#000',
-    height: '100%',
-    width: '25%',
-    justifyContent: 'space-between'
-  },
-  previousOperation: {
-    paddingHorizontal: 10
-  },
-  previousOperationTitle: {
-    color: '#8F8F8F'
-  },
-  previousOperationText: {
-    color: '#FFFFFF',
-    fontSize: 14
-  },
-  previousOperationTextContainer: {
-    width: '88%',
-    height: 55,
-    backgroundColor: '#CF3B23',
-    alignSelf: 'center',
-    padding: 5
-  },
-  resultPreviousOperation: {
-    marginTop: 5
-  }
-})
 
 export default RightBlock

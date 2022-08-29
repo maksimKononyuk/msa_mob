@@ -11,7 +11,7 @@ const OperationContainer = () => {
     <View
       style={{
         ...styles.operationContainer,
-        paddingLeft: 10,
+        paddingLeft: windowWidth <= 480 ? 10 : 25,
         backgroundColor: windowWidth > 480 ? 'transparent' : '#fff'
       }}
     >

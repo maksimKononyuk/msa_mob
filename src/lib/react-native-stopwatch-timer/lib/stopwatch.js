@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Text, View } from 'react-native'
 import PropTypes from 'prop-types'
 import { formatTimeString } from './utils'
+import { windowWidth } from '../../../Constants'
 
 class StopWatch extends Component {
   static propTypes = {

@@ -4,12 +4,12 @@ import { windowWidth } from '../../Constants'
 const styles = StyleSheet.create({
   operationText: {
     fontFamily: 'Roboto',
-    fontSize: 12,
+    fontSize: windowWidth <= 480 ? 12 : 14,
     color: '#8F8F8F'
   },
   descriptionNameText: {
     fontFamily: 'Montserrat',
-    fontSize: 16,
+    fontSize: windowWidth <= 480 ? 18 : 26,
     color: windowWidth > 480 ? '#fff' : '#000'
   }
 })

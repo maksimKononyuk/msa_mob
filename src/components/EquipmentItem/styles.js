@@ -10,6 +10,9 @@ const styles = StyleSheet.create({
     borderBottomColor: '#F5F5F5',
     paddingHorizontal: 15
   },
+  checkAndTitleContainer: {
+    flexDirection: 'row'
+  },
   checkIcon: {
     width: 30,
     height: 30,
@@ -22,7 +25,7 @@ const styles = StyleSheet.create({
     height: '80%'
   },
   title: {
-    width: '62%',
+    marginLeft: 15,
     fontSize: 16,
     fontFamily: 'Roboto'
   },

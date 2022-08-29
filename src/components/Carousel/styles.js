@@ -7,7 +7,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#F5F5F5',
     elevation: 2,
-    borderTopWidth: 3
+    borderTopWidth: 3,
+    alignItems: 'center'
   }
 })
 
