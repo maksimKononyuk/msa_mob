@@ -6,9 +6,8 @@ const styles = StyleSheet.create({
     width: windowWidth <= 480 ? '50%' : '100%',
     height: windowWidth <= 480 ? 80 : 100,
     justifyContent: 'center',
-    alignItems: windowWidth <= 480 ? 'center' : 'flex-start',
-    backgroundColor: '#000',
-    paddingLeft: windowWidth <= 480 ? 0 : 25
+    alignItems: 'center',
+    backgroundColor: '#000'
   },
   titleText: {
     fontFamily: 'Roboto',
