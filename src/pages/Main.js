@@ -122,6 +122,7 @@ function Main({ route, navigation }) {
   )
 
   const [operationFinishLoading, setOperationFinishLoading] = useState(false)
+  const [relationArr, setRelationArr] = useState([])
 
   // For BackgroundFetch
 
@@ -416,6 +417,27 @@ function Main({ route, navigation }) {
     if (modalVisible) dispatch(setIsConfirmation(false))
   }, [modalVisible])
 
+  const foo = async () => {
+    const arr = []
+    for (let i = 0; i < activeOrder.operation.relation.length; i++) {
+      await axios
+        .get(
+          `/condition_result/${activeOrder._id}/${activeOrder.operation.relation[i]._id}`
+        )
+        .then((res) => {
+          arr.push(res.data[0].relation)
+        })
+        .catch(() => {
+          arr.push(true)
+        })
+    }
+    setRelationArr(arr)
+  }
+
+  useEffect(() => {
+    foo()
+  }, [activeOrder?._id])
+
   return (
     <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#fff' }}>
       <StatusBar style='light' translucent={false} />
@@ -481,7 +503,10 @@ function Main({ route, navigation }) {
         {showMaterialsComponent ? (
           <Materials finishOrder={finishOrder} />
         ) : (
-          <OperationResult finishOrder={finishOrder} />
+          <OperationResult
+            finishOrder={finishOrder}
+            relationArr={relationArr}
+          />
         )}
       </Modal>
       {isErrorComponentVisible && <ErrorComponent />}

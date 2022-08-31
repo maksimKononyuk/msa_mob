@@ -14,7 +14,7 @@ import {
 } from '../../redux/actionCreators'
 import ErrorComponent from '../ErrorComponent/ErrorComponent'
 
-const OperationResult = ({ finishOrder }) => {
+const OperationResult = ({ finishOrder, relationArr }) => {
   const dispatch = useDispatch()
 
   const activeOrder = useSelector((state) => state.main.activeOrder)
@@ -28,7 +28,7 @@ const OperationResult = ({ finishOrder }) => {
   const maretialsRequest = (index) => {
     if (activeOrder) {
       axios
-        .get(`order_id_worker/${activeOrder._id}/${userId}/`)
+        .get(`order_id_worker/${activeOrder._id}/${userId}`)
         .then((res) =>
           dispatch(
             setMaterialsArr(res.data[0].operation.relation[index].function)
@@ -53,37 +53,42 @@ const OperationResult = ({ finishOrder }) => {
       <View style={componentStyles.resultContainer}>
         <Text style={componentStyles.resultText}>Operation result</Text>
       </View>
-      {activeOrder?.operation.relation.map((item, index) => (
-        <TouchableOpacity
-          activeOpacity={0.5}
-          onPress={() => {
-            dispatch(
-              setFinishOrderParams({
-                nextOperationId: item.so_id,
-                relationId: item._id
-              })
-            )
-            if (activeOrder?.operation.relation[index].function.length > 0) {
-              maretialsRequest(index)
-              dispatch(setShowMaterialsComponent(true))
-            } else {
-              finishOrder(item.so_id, item._id)
-            }
-          }}
-          key={item._id}
-          style={{
-            ...styles.center,
-            ...styles.operationItem,
-            backgroundColor: item.bgr_color
-          }}
-        >
-          <Text style={componentStyles.itemResultText}>{item.result}</Text>
-          <Image
-            style={componentStyles.arrowIcon}
-            source={require('../../assets/images/arrow_white.png')}
-          />
-        </TouchableOpacity>
-      ))}
+      {activeOrder?.operation.relation.map(
+        (item, index) =>
+          relationArr[index] !== false && (
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={() => {
+                dispatch(
+                  setFinishOrderParams({
+                    nextOperationId: item.so_id,
+                    relationId: item._id
+                  })
+                )
+                if (
+                  activeOrder?.operation.relation[index].function.length > 0
+                ) {
+                  maretialsRequest(index)
+                  dispatch(setShowMaterialsComponent(true))
+                } else {
+                  finishOrder(item.so_id, item._id)
+                }
+              }}
+              key={item._id}
+              style={{
+                ...styles.center,
+                ...styles.operationItem,
+                backgroundColor: item.bgr_color
+              }}
+            >
+              <Text style={componentStyles.itemResultText}>{item.result}</Text>
+              <Image
+                style={componentStyles.arrowIcon}
+                source={require('../../assets/images/arrow_white.png')}
+              />
+            </TouchableOpacity>
+          )
+      )}
       <View style={componentStyles.canselButtonContainer}>
         <TouchableOpacity
           activeOpacity={0.5}
