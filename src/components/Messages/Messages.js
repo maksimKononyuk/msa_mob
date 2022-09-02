@@ -13,14 +13,15 @@ import styles from './styles'
 
 const Messages = () => {
   const dispatch = useDispatch()
-  const orderId = useSelector((state) => state.main.activeOrder._id)
+  const activeOrder = useSelector((state) => state.main.activeOrder)
+  const userName = useSelector((state) => state.main.user.name)
   const userId = useSelector((state) => state.main.user.u_id)
   const messages = useSelector((state) => state.messages.messages)
 
   useEffect(() => {
     const getMessage = setInterval(() => {
       axios
-        .get(`order_worker_message/${orderId}`)
+        .get(`order_worker_message/${activeOrder._id}`)
         .then((res) => {
           dispatch(setMessages(res.data))
         })
@@ -47,7 +48,7 @@ const Messages = () => {
                 key={index}
                 isYourMessage={userId === item.w_id}
                 userName={item.worker}
-                operation={item.operation}
+                operation={activeOrder.description.name}
                 date={item.m_data}
                 message={item.message}
               />
@@ -58,7 +59,7 @@ const Messages = () => {
       </ScrollView>
 
       <View style={styles.newMessageItemContainer}>
-        <NewMessagesItem orderId={orderId} userId={userId} />
+        <NewMessagesItem orderId={activeOrder._id} userId={userId} />
       </View>
     </View>
   )

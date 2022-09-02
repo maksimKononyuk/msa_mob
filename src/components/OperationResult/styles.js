@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
   itemResultText: {
     fontFamily: 'Montserrat',
     fontSize: 18,
-    color: '#fff'
+    color: '#fff',
+    width: '90%'
   },
   arrowIcon: {
     width: 20,

@@ -177,8 +177,8 @@ function Main({ route, navigation }) {
       )
       .catch((err) => {
         console.log('Network error when releasing equipment ' + err)
-        dispatch(setErrorMessage('when releasing equipment ' + err))
-        dispatch(setIsErrorComponentVisible(true))
+        // dispatch(setErrorMessage('when releasing equipment ' + err))
+        // dispatch(setIsErrorComponentVisible(true))
       })
   }
 
@@ -294,6 +294,8 @@ function Main({ route, navigation }) {
         dispatch(setOrderStarted(false))
         dispatch(setMaterialsArr([]))
         dispatch(setShowMaterialsComponent(false))
+        dispatch(setActiveOrder(null))
+        dispatch(setIsEquipmentEmpty(false))
         Alert.alert('MSA Mobile', 'Your operation has been completed.', [
           {
             text: 'Ok'
@@ -324,8 +326,8 @@ function Main({ route, navigation }) {
         })
         .catch((err) => {
           console.log('Network error when receiving equipment ' + err)
-          dispatch(setErrorMessage('when receiving equipment ' + err))
-          dispatch(setIsErrorComponentVisible(true))
+          // dispatch(setErrorMessage('when receiving equipment ' + err))
+          // dispatch(setIsErrorComponentVisible(true))
         })
     }
   }
@@ -417,7 +419,7 @@ function Main({ route, navigation }) {
     if (modalVisible) dispatch(setIsConfirmation(false))
   }, [modalVisible])
 
-  const foo = async () => {
+  const conditionResult = async () => {
     const arr = []
     for (let i = 0; i < activeOrder.operation.relation.length; i++) {
       await axios
@@ -435,7 +437,7 @@ function Main({ route, navigation }) {
   }
 
   useEffect(() => {
-    foo()
+    activeOrder && conditionResult()
   }, [activeOrder?._id])
 
   return (

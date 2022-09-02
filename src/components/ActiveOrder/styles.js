@@ -17,6 +17,12 @@ const styles = StyleSheet.create({
     color: '#282A2D',
     textAlign: 'center',
     paddingHorizontal: 50
+  },
+  qrContainer: {
+    alignSelf: 'center',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 })
 

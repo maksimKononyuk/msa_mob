@@ -3,7 +3,7 @@ import { windowWidth } from '../../Constants'
 
 const styles = StyleSheet.create({
   container: {
-    width: windowWidth <= 480 ? '100%' : '80%',
+    width: '100%',
     paddingHorizontal: 25,
     paddingVertical: 5,
     backgroundColor: '#F1F1F1',
