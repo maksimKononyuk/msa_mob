@@ -11,6 +11,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat',
     fontSize: windowWidth <= 480 ? 18 : 26,
     color: windowWidth > 480 ? '#fff' : '#000'
+  },
+  scrollContainer: {
+    maxHeight: windowWidth > 480 ? 150 : 60
   }
 })
 

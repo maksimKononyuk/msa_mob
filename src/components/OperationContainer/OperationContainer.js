@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView } from 'react-native'
 import { useSelector } from 'react-redux'
 import { windowWidth } from '../../Constants'
 import styles from '../../styles/Styles'
@@ -16,7 +16,9 @@ const OperationContainer = () => {
       }}
     >
       <Text style={componentStyles.operationText}>Operation</Text>
-      <Text style={componentStyles.descriptionNameText}>{name}</Text>
+      <ScrollView style={componentStyles.scrollContainer}>
+        <Text style={componentStyles.descriptionNameText}>{name}</Text>
+      </ScrollView>
     </View>
   )
 }

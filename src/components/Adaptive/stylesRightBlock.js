@@ -8,8 +8,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   previousOperation: {
-    paddingHorizontal: 25,
-    marginTop: 30
+    paddingHorizontal: 25
   },
   previousOperationTitle: {
     color: '#8F8F8F'
@@ -27,7 +26,7 @@ const styles = StyleSheet.create({
     padding: 10
   },
   resultPreviousOperation: {
-    marginTop: 35,
+    marginTop: 20,
     paddingHorizontal: 15
   }
 })

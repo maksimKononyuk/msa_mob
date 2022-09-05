@@ -326,8 +326,8 @@ function Main({ route, navigation }) {
         })
         .catch((err) => {
           console.log('Network error when receiving equipment ' + err)
-          // dispatch(setErrorMessage('when receiving equipment ' + err))
-          // dispatch(setIsErrorComponentVisible(true))
+          dispatch(setErrorMessage('when receiving equipment ' + err))
+          dispatch(setIsErrorComponentVisible(true))
         })
     }
   }
