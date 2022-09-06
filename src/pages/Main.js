@@ -16,7 +16,7 @@ import OrderCancelModal from '../components/OrderCancelModal/OrderCancelModal'
 import Messages from '../components/Messages/Messages'
 import OperationContainer from '../components/OperationContainer/OperationContainer'
 import styles from '../styles/Styles'
-import { windowWidth } from '../Constants'
+import { windowWidth, storageClear } from '../Constants'
 import Materials from '../components/Materials/Materials'
 import Equipment from '../components/Equipment/Equipment'
 import * as TaskManager from 'expo-task-manager'
@@ -183,30 +183,31 @@ function Main({ route, navigation }) {
   }
 
   const logOut = async () => {
-    axios
-      .put('worker_in', {
-        _id: user.u_id,
-        at_work: false
-      })
-      .then(async () => {
-        await AsyncStorage.clear()
-        navigation.navigate('Auth')
-        // Updates.reloadAsync()
-        dispatch(setIsUserMenuModal(false))
-        dispatch(setOrderStarted(false))
-        dispatch(setIsCompleteWorkShiftVisible(false))
-      })
-      .catch((err) => {
-        console.log('Network error when logging out ' + err)
-        dispatch(setErrorMessage('when logging out ' + err))
-        dispatch(setIsErrorComponentVisible(true))
-      })
+    user &&
+      axios
+        .put('worker_in', {
+          _id: user.u_id,
+          at_work: false
+        })
+        .then(async () => {
+          await storageClear()
+          navigation.navigate('Auth')
+          // Updates.reloadAsync()
+          dispatch(setIsUserMenuModal(false))
+          dispatch(setOrderStarted(false))
+          dispatch(setIsCompleteWorkShiftVisible(false))
+        })
+        .catch((err) => {
+          console.log('Network error when logging out ' + err)
+          dispatch(setErrorMessage('when logging out ' + err))
+          dispatch(setIsErrorComponentVisible(true))
+        })
     equipmentBusy(false)
     ordersCount = 0
   }
 
   const getOrders = (user) => {
-    user.u_id &&
+    user &&
       axios
         .get(`order_worker/${user.u_id}`)
         .then((res) => {
@@ -384,7 +385,7 @@ function Main({ route, navigation }) {
           .then(async (res) => {
             if (res.data[0].at_work === false) {
               clearInterval(checkLogout)
-              await AsyncStorage.clear()
+              await storageClear()
               // navigation.navigate('Auth')
               Updates.reloadAsync()
               Alert.alert(

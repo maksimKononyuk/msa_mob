@@ -45,7 +45,8 @@ import {
   SET_TEMP_DETAIL,
   SET_USER,
   SET_USER_MENU_ORDERS,
-  SET_IS_EQUIPMENT_LOADING
+  SET_IS_EQUIPMENT_LOADING,
+  SET_LANGUAGE
 } from './actionTypes'
 
 // For mainReducer
@@ -196,6 +197,13 @@ export const setSelectedItemsUnCheced = (id) => {
 export const setFinishOrderParams = (data) => {
   return {
     type: SET_FINISH_ORDER_PARAMS,
+    data
+  }
+}
+
+export const setLanguage = (data) => {
+  return {
+    type: SET_LANGUAGE,
     data
   }
 }

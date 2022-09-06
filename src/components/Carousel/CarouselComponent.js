@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import { View } from 'react-native'
-import { carouselItems, windowWidth } from '../../Constants'
+import { getCarouselItems, windowWidth } from '../../Constants'
 import Carousel from 'react-native-snap-carousel'
 import MenuItem from '../MenuItem/MenuItem'
 import styles from './styles'
@@ -10,6 +10,7 @@ import { setActiveIndex } from '../../redux/actionCreators'
 const CarouselComponent = () => {
   const dispatch = useDispatch()
   const orderStarted = useSelector((state) => state.main.orderStarted)
+  const language = useSelector((state) => state.main.language)
   const carousel = useRef()
 
   const renderCarouselItem = ({ item, index }) => {
@@ -25,7 +26,7 @@ const CarouselComponent = () => {
         activeSlideOffset={0}
         swipeThreshold={0}
         callbackOffsetMargin={20}
-        data={carouselItems}
+        data={getCarouselItems(language)}
         sliderWidth={windowWidth > 480 ? windowWidth * 0.75 : windowWidth}
         itemWidth={windowWidth > 480 ? windowWidth * 0.3 : windowWidth / 3}
         sliderHeight={60}

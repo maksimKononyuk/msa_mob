@@ -25,6 +25,11 @@ axios.interceptors.request.use(
   (error) => Promise.reject(error)
 )
 
+export const storageClear = async () => {
+  await AsyncStorage.removeItem('user')
+  await AsyncStorage.removeItem('role')
+}
+
 export const theme = {
   ...DefaultTheme,
   colors: {
@@ -37,11 +42,28 @@ export const theme = {
 export const windowWidth = Dimensions.get('window').width
 export const windowHeight = Dimensions.get('window').height
 
-export const carouselItems = [
-  { title: 'Messages' },
-  { title: 'Order' },
-  { title: 'Tech. maps' }
-]
+export const getCarouselItems = (lang) => {
+  switch (lang) {
+    case 'en':
+      return [
+        { title: 'Messages' },
+        { title: 'Order' },
+        { title: 'Tech. maps' }
+      ]
+    case 'ru':
+      return [
+        { title: 'Сообщения' },
+        { title: 'Заказ' },
+        { title: 'Тех. карты' }
+      ]
+    default:
+      return [
+        { title: 'Messages' },
+        { title: 'Order' },
+        { title: 'Tech. maps' }
+      ]
+  }
+}
 
 export const jsonTreeTheme = {
   scheme: 'monokai',
@@ -96,4 +118,225 @@ export const htmlPrint = (id, name, ImgTag) => {
     </body>
   </html>
   `
+}
+export class SettingsComponentTranslate {
+  constructor(lang) {
+    this.lang = lang
+  }
+  getLanguageLabel() {
+    switch (this.lang) {
+      case 'en':
+        return 'Language'
+      case 'ru':
+        return 'Язык'
+      default:
+        return 'Language'
+    }
+  }
+  getEnglishLabel() {
+    switch (this.lang) {
+      case 'en':
+        return 'English'
+      case 'ru':
+        return 'Английский'
+      default:
+        return 'English'
+    }
+  }
+  getRussianLabel() {
+    switch (this.lang) {
+      case 'en':
+        return 'Russian'
+      case 'ru':
+        return 'Русский'
+      default:
+        return 'Russian'
+    }
+  }
+}
+
+export class CancelButtonTranslate {
+  constructor(lang) {
+    this.lang = lang
+  }
+  getCancelLabel() {
+    switch (this.lang) {
+      case 'en':
+        return 'Cancel'
+      case 'ru':
+        return 'Отмена'
+      default:
+        return 'Cancel'
+    }
+  }
+}
+
+export class UserMenuModalTranslate {
+  constructor(lang) {
+    this.lang = lang
+  }
+  getNewOrderLabel() {
+    switch (this.lang) {
+      case 'en':
+        return 'New order'
+      case 'ru':
+        return 'Новый заказ'
+      default:
+        return 'New order'
+    }
+  }
+  getLogoutLabel() {
+    switch (this.lang) {
+      case 'en':
+        return 'Logout'
+      case 'ru':
+        return 'Выйти'
+      default:
+        return 'Logout'
+    }
+  }
+  getSettingsLabel() {
+    switch (this.lang) {
+      case 'en':
+        return 'Settings'
+      case 'ru':
+        return 'Настройки'
+      default:
+        return 'Settings'
+    }
+  }
+  getVersionLabel() {
+    switch (this.lang) {
+      case 'en':
+        return 'Version'
+      case 'ru':
+        return 'Версия'
+      default:
+        return 'Version'
+    }
+  }
+}
+
+export class ActiveOrderTranslate {
+  constructor(lang) {
+    this.lang = lang
+  }
+  getInfoLable() {
+    switch (this.lang) {
+      case 'en':
+        return 'Complete order information will appear after clicking "START"'
+      case 'ru':
+        return 'Полная информация о заказе появится после нажатия кнопки "НАЧАТЬ"'
+      default:
+        return 'Complete order information will appear after clicking "START"'
+    }
+  }
+}
+export class OperationContainerTranslate {
+  constructor(lang) {
+    this.lang = lang
+  }
+  getTitleLabel() {
+    switch (this.lang) {
+      case 'en':
+        return 'Operation'
+      case 'ru':
+        return 'Операция'
+      default:
+        return 'Operation'
+    }
+  }
+}
+
+export class TimerTranslate {
+  constructor(lang) {
+    this.lang = lang
+  }
+  getTitleLable() {
+    switch (this.lang) {
+      case 'en':
+        return 'Work time on the order'
+      case 'ru':
+        return 'Время работы над заказом'
+      default:
+        return 'Work time on the order'
+    }
+  }
+}
+
+export class StartFinishButtonTranslate {
+  constructor(lang) {
+    this.lang = lang
+  }
+  getStartLable() {
+    switch (this.lang) {
+      case 'en':
+        return 'START'
+      case 'ru':
+        return 'НАЧАТЬ'
+      default:
+        return 'START'
+    }
+  }
+  getFinishLable() {
+    switch (this.lang) {
+      case 'en':
+        return 'FINISH'
+      case 'ru':
+        return 'ЗАВЕРШИТЬ'
+      default:
+        return 'FINISH'
+    }
+  }
+}
+export class OrdersTranslate {
+  constructor(lang) {
+    this.lang = lang
+  }
+  getTitleLable() {
+    switch (this.lang) {
+      case 'en':
+        return 'Searching for available orders'
+      case 'ru':
+        return 'Поиск доступных заказов'
+      default:
+        return 'Searching for available orders'
+    }
+  }
+}
+
+export class CompleteWorkShiftTranslate {
+  constructor(lang) {
+    this.lang = lang
+  }
+  getInfoLable() {
+    switch (this.lang) {
+      case 'en':
+        return 'Do you really want to complete your work shift?'
+      case 'ru':
+        return 'Вы действительно хотите завершить свою рабочую смену?'
+      default:
+        return 'Do you really want to complete your work shift?'
+    }
+  }
+  getYesLable() {
+    switch (this.lang) {
+      case 'en':
+        return 'Yes'
+      case 'ru':
+        return 'Да'
+      default:
+        return 'Yes'
+    }
+  }
+  getNoLable() {
+    switch (this.lang) {
+      case 'en':
+        return 'No'
+      case 'ru':
+        return 'Нет'
+      default:
+        return 'No'
+    }
+  }
 }

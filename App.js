@@ -6,12 +6,10 @@ import { Provider as PaperProvider } from 'react-native-paper'
 import Auth from './src/pages/Auth'
 import Main from './src/pages/Main'
 
-import { theme } from './src/Constants'
+import { theme, windowWidth } from './src/Constants'
 import { Provider } from 'react-redux'
 import store from './src/redux/store'
 import * as ScreenOrientation from 'expo-screen-orientation'
-import { windowWidth } from './src/Constants'
-import ErrorComponent from './src/components/ErrorComponent/ErrorComponent'
 
 const Stack = createNativeStackNavigator()
 

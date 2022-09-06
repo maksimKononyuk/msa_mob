@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native'
 import JSONTree from 'react-native-json-tree'
 import componentStyles from './styles'
 
 import styles from '../../styles/Styles'
-import { windowWidth, jsonTreeTheme } from '../../Constants'
+import {
+  windowWidth,
+  jsonTreeTheme,
+  ActiveOrderTranslate
+} from '../../Constants'
 import { useDispatch, useSelector } from 'react-redux'
 import { setActiveBarCode } from '../../redux/actionCreators'
 
@@ -12,6 +16,11 @@ const ActiveOrder = () => {
   const dispatch = useDispatch()
   const orderStarted = useSelector((state) => state.main.orderStarted)
   const order = useSelector((state) => state.main.activeOrder)
+  const language = useSelector((state) => state.main.language)
+  const translate = useMemo(
+    () => new ActiveOrderTranslate(language),
+    [language]
+  )
 
   return (
     <View
@@ -62,7 +71,7 @@ const ActiveOrder = () => {
             />
           </TouchableOpacity>
           <Text style={componentStyles.mainText}>
-            Complete order information will appear after clicking "START"
+            {translate.getInfoLable()}
           </Text>
         </View>
       )}

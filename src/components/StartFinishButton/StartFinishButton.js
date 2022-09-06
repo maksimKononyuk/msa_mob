@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { View, TouchableOpacity, Image, Text, Alert } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { setModalVisible, setIsConfirmation } from '../../redux/actionCreators'
 import styles from '../../styles/Styles'
 import componentStyles from './styles'
+import { StartFinishButtonTranslate } from '../../Constants'
 
 const StartFinishButton = ({ startOrder }) => {
   const dispatch = useDispatch()
@@ -12,6 +13,11 @@ const StartFinishButton = ({ startOrder }) => {
   const selectedItems = useSelector((state) => state.main.selectedItems)
   const isEquipmentEmpty = useSelector(
     (state) => state.startFinishButton.isEquipmentEmpty
+  )
+  const language = useSelector((state) => state.main.language)
+  const translate = useMemo(
+    () => new StartFinishButtonTranslate(language),
+    [language]
   )
 
   return (
@@ -68,8 +74,21 @@ const StartFinishButton = ({ startOrder }) => {
               : Alert.alert('Choose equipment!')
           }}
         >
-          <Text style={componentStyles.titleText}>
-            {orderStarted ? 'FINISH' : 'START'}
+          <Text
+            style={[
+              componentStyles.titleText,
+              {
+                fontSize:
+                  translate.getFinishLable().length > 6 ||
+                  translate.getStartLable().length > 6
+                    ? 22
+                    : 30
+              }
+            ]}
+          >
+            {orderStarted
+              ? translate.getFinishLable()
+              : translate.getStartLable()}
           </Text>
         </TouchableOpacity>
       )}

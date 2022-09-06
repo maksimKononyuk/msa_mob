@@ -14,8 +14,10 @@ import {
   setLogin,
   setPassword,
   setAppIsReady,
-  setShowError
+  setShowError,
+  setLanguage
 } from '../redux/actionCreators'
+import { storageClear } from '../Constants'
 import { transform } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes'
 
 let customFonts = {
@@ -39,7 +41,7 @@ function Auth({ navigation }) {
       try {
         await SplashScreen.preventAutoHideAsync()
         await Font.loadAsync(customFonts)
-        await AsyncStorage.clear()
+        await storageClear()
         const update = await Updates.checkForUpdateAsync()
         if (update.isAvailable) {
           Alert.alert(
@@ -65,6 +67,13 @@ function Auth({ navigation }) {
     }
 
     prepare()
+  }, [])
+
+  useEffect(() => {
+    ;(async () => {
+      const storageLang = await AsyncStorage.getItem('lang')
+      storageLang && dispatch(setLanguage(storageLang))
+    })()
   }, [])
 
   const onLayoutRootView = useCallback(async () => {

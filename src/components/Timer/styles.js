@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontFamily: 'Roboto',
-    fontSize: windowWidth <= 480 ? 12 : 14,
+    fontSize: windowWidth <= 480 ? 11 : 14,
     color: '#888'
   }
 })

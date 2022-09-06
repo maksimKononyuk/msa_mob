@@ -1,19 +1,20 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { View, Text, Modal, TouchableOpacity, Image } from 'react-native'
 import done from '../../assets/images/ok.png'
 import cancel from '../../assets/images/no.png'
 import styles from './styles'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setIsCompleteWorkShiftVisible } from '../../redux/actionCreators'
+import { CompleteWorkShiftTranslate } from '../../Constants'
 
 const CompleteWorkShift = ({ logOut }) => {
+  const language = useSelector((state) => state.main.language)
+  const translate = useMemo(() => new CompleteWorkShiftTranslate(language))
   const dispatch = useDispatch()
   return (
     <Modal animationType='slide' transparent={true} visible={true}>
       <View style={styles.container}>
-        <Text style={styles.modalTitle}>
-          Do you really want to complete your work shift?
-        </Text>
+        <Text style={styles.modalTitle}>{translate.getInfoLable()}</Text>
         <View style={styles.buttonBlock}>
           <TouchableOpacity
             activeOpacity={0.5}
@@ -21,7 +22,7 @@ const CompleteWorkShift = ({ logOut }) => {
             onPress={() => logOut()}
           >
             <Image source={done} style={styles.okButton} />
-            <Text style={styles.buttonText}>Yes</Text>
+            <Text style={styles.buttonText}>{translate.getYesLable()}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.5}
@@ -29,7 +30,7 @@ const CompleteWorkShift = ({ logOut }) => {
             onPress={() => dispatch(setIsCompleteWorkShiftVisible(false))}
           >
             <Image source={cancel} style={styles.noButton} />
-            <Text style={styles.buttonText}>No</Text>
+            <Text style={styles.buttonText}>{translate.getNoLable()}</Text>
           </TouchableOpacity>
         </View>
       </View>

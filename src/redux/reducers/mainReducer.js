@@ -19,7 +19,8 @@ import {
   SET_SELECTED_ITEMS_CHECKED,
   SET_SELECTED_ITEMS_UNCHECKED,
   SET_SHOW_MATERIALS_COMPONENT,
-  SET_USER
+  SET_USER,
+  SET_LANGUAGE
 } from '../actionTypes'
 
 const initialState = {
@@ -40,7 +41,8 @@ const initialState = {
   isEquipmentLoading: true,
   isEquipmentVisible: true,
   selectedItems: [],
-  finishOrderParams: null
+  finishOrderParams: null,
+  language: 'en'
 }
 
 export default mainReducer = (state = initialState, action) => {
@@ -106,6 +108,8 @@ export default mainReducer = (state = initialState, action) => {
         }
     case SET_FINISH_ORDER_PARAMS:
       return { ...state, finishOrderParams: action.data }
+    case SET_LANGUAGE:
+      return { ...state, language: action.data }
     default:
       return state
   }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import {
   View,
   Text,
@@ -12,7 +12,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import styles from '../../styles/Styles'
 import componentStyles from './styles'
 import axios from 'axios'
+import CancelButton from '../CancelButton/CancelButton'
 import CompleteWorkShift from '../CompleteWorkShift/CompleteWorkShift'
+import SettingsComponent from '../SettingsComponent/SettingsComponent'
 import * as Application from 'expo-application'
 import {
   setIsUserMenuModal,
@@ -24,11 +26,13 @@ import {
   setErrorMessage
 } from '../../redux/actionCreators'
 import { useDispatch, useSelector } from 'react-redux'
+import { UserMenuModalTranslate } from '../../Constants'
 import ErrorComponent from '../ErrorComponent/ErrorComponent'
 
 const UsersMenuModal = ({ logOut }) => {
   const [isModalNewOrder, setIsModalNewOrder] = useState(false)
   const [isModalGetDetails, setIsModalGetDetails] = useState(false)
+  const [isSettings, setIsSettings] = useState(false)
 
   const dispatch = useDispatch()
   const isCompleteWorkShiftVisible = useSelector(
@@ -43,6 +47,8 @@ const UsersMenuModal = ({ logOut }) => {
   const isErrorComponentVisible = useSelector(
     (state) => state.error.isCompleteWorkShiftVisible
   )
+  const language = useSelector((state) => state.main.language)
+  const translate = useMemo(() => new UserMenuModalTranslate(language))
 
   const textInputHandler = (text, key) => {
     dispatch(setTempDetail(text, key))
@@ -132,34 +138,34 @@ const UsersMenuModal = ({ logOut }) => {
             style={componentStyles.menuItem}
             onPress={getNewOrder}
           >
-            <Text style={componentStyles.menuItemText}>New order</Text>
+            <Text style={componentStyles.menuItemText}>
+              {translate.getNewOrderLabel()}
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.5}
             style={componentStyles.menuItem}
             onPress={() => dispatch(setIsCompleteWorkShiftVisible(true))}
           >
-            <Text style={componentStyles.menuItemText}>Logout</Text>
+            <Text style={componentStyles.menuItemText}>
+              {translate.getLogoutLabel()}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            style={componentStyles.menuItem}
+            onPress={() => setIsSettings(true)}
+          >
+            <Text style={componentStyles.menuItemText}>
+              {translate.getSettingsLabel()}
+            </Text>
           </TouchableOpacity>
         </View>
         <View style={componentStyles.closeButtomContainer}>
-          <TouchableOpacity
-            activeOpacity={0.5}
-            style={{
-              ...styles.center,
-              ...styles.cancelContainer
-            }}
-            onPress={() => dispatch(setIsUserMenuModal(false))}
-          >
-            <Image
-              style={componentStyles.closeIcon}
-              source={require('../../assets/images/close.png')}
-            />
-            <Text style={componentStyles.cancelText}>Cancel</Text>
-          </TouchableOpacity>
+          <CancelButton handler={() => dispatch(setIsUserMenuModal(false))} />
         </View>
         <Text style={styles.versionText}>
-          Version: {Application.nativeApplicationVersion}
+          {translate.getVersionLabel()}: {Application.nativeApplicationVersion}
         </Text>
         <Modal
           animationType='slider'
@@ -174,7 +180,7 @@ const UsersMenuModal = ({ logOut }) => {
                   componentStyles.newOrderText
                 ]}
               >
-                New order
+                {translate.getNewOrderLabel()}
               </Text>
               <View style={componentStyles.menuItemBlock}>
                 {orders.map((item, index) => {
@@ -193,20 +199,7 @@ const UsersMenuModal = ({ logOut }) => {
                 })}
               </View>
             </View>
-            <TouchableOpacity
-              activeOpacity={0.5}
-              style={{
-                ...styles.center,
-                ...styles.cancelContainer
-              }}
-              onPress={() => setIsModalNewOrder(false)}
-            >
-              <Image
-                style={componentStyles.closeIcon}
-                source={require('../../assets/images/close.png')}
-              />
-              <Text style={componentStyles.cancelText}>Cancel</Text>
-            </TouchableOpacity>
+            <CancelButton handler={() => setIsModalNewOrder(false)} />
           </View>
           <Modal
             animationType='slider'
@@ -247,25 +240,13 @@ const UsersMenuModal = ({ logOut }) => {
                 >
                   <Text style={componentStyles.okButtonText}>OK!</Text>
                 </TouchableOpacity>
-                <TouchableOpacity
-                  activeOpacity={0.5}
-                  style={{
-                    ...styles.center,
-                    ...styles.cancelContainer
-                  }}
-                  onPress={() => setIsModalGetDetails(false)}
-                >
-                  <Image
-                    style={componentStyles.closeIcon}
-                    source={require('../../assets/images/close.png')}
-                  />
-                  <Text style={componentStyles.cancelText}>Cancel</Text>
-                </TouchableOpacity>
+                <CancelButton handler={() => setIsModalGetDetails(false)} />
               </View>
             </View>
           </Modal>
         </Modal>
         {isCompleteWorkShiftVisible && <CompleteWorkShift logOut={logOut} />}
+        {isSettings && <SettingsComponent setIsSettings={setIsSettings} />}
         {isErrorComponentVisible && <ErrorComponent />}
       </View>
       {isErrorComponentVisible && <ErrorComponent />}

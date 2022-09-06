@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { View, ActivityIndicator, ScrollView, Text } from 'react-native'
 import Order from '../Order/Order'
-import { windowWidth } from '../../Constants'
+import { windowWidth, OrdersTranslate } from '../../Constants'
 import styles from '../../styles/Styles'
 import componentStyles from './styles'
 import { useSelector } from 'react-redux'
 
 const Orders = () => {
   const orders = useSelector((state) => state.main.orders)
+  const language = useSelector((state) => state.main.language)
+  const translate = useMemo(() => new OrdersTranslate(language), [language])
   return (
     <View style={[styles.shadow, componentStyles.container]}>
       {windowWidth <= 480 ? (
@@ -41,7 +43,7 @@ const Orders = () => {
             >
               <ActivityIndicator size='large' color='#000088' />
               <Text style={componentStyles.searchingText}>
-                Searching for available orders
+                {translate.getTitleLable()}
               </Text>
             </View>
           )}
