@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { View, Alert, Modal, ActivityIndicator } from 'react-native'
 import Carousel from '../components/Carousel/CarouselComponent'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -16,7 +16,7 @@ import OrderCancelModal from '../components/OrderCancelModal/OrderCancelModal'
 import Messages from '../components/Messages/Messages'
 import OperationContainer from '../components/OperationContainer/OperationContainer'
 import styles from '../styles/Styles'
-import { windowWidth, storageClear } from '../Constants'
+import { windowWidth, storageClear, MainTranslate } from '../Constants'
 import Materials from '../components/Materials/Materials'
 import Equipment from '../components/Equipment/Equipment'
 import * as TaskManager from 'expo-task-manager'
@@ -123,6 +123,9 @@ function Main({ route, navigation }) {
 
   const [operationFinishLoading, setOperationFinishLoading] = useState(false)
   const [relationArr, setRelationArr] = useState([])
+
+  const language = useSelector((state) => state.main.language)
+  const translate = useMemo(() => new MainTranslate(language), [language])
 
   // For BackgroundFetch
 
@@ -297,7 +300,7 @@ function Main({ route, navigation }) {
         dispatch(setShowMaterialsComponent(false))
         dispatch(setActiveOrder(null))
         dispatch(setIsEquipmentEmpty(false))
-        Alert.alert('MSA Mobile', 'Your operation has been completed.', [
+        Alert.alert('MSA', translate.getFinishOrderAlert(), [
           {
             text: 'Ok'
           }

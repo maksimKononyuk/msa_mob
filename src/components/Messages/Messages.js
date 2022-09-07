@@ -15,7 +15,7 @@ const Messages = () => {
   const dispatch = useDispatch()
   const activeOrder = useSelector((state) => state.main.activeOrder)
   const userName = useSelector((state) => state.main.user.name)
-  const userId = useSelector((state) => state.main.user.u_id)
+  const userId = useSelector((state) => state.main.user?.u_id)
   const messages = useSelector((state) => state.messages.messages)
 
   useEffect(() => {

@@ -8,9 +8,12 @@ import { setIsCompleteWorkShiftVisible } from '../../redux/actionCreators'
 import { CompleteWorkShiftTranslate } from '../../Constants'
 
 const CompleteWorkShift = ({ logOut }) => {
-  const language = useSelector((state) => state.main.language)
-  const translate = useMemo(() => new CompleteWorkShiftTranslate(language))
   const dispatch = useDispatch()
+  const language = useSelector((state) => state.main.language)
+  const translate = useMemo(
+    () => new CompleteWorkShiftTranslate(language),
+    [language]
+  )
   return (
     <Modal animationType='slide' transparent={true} visible={true}>
       <View style={styles.container}>

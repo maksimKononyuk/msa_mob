@@ -27,19 +27,13 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20
   },
-  canselButtonContainer: {
-    position: 'absolute',
-    bottom: 30
+  mainContainer: {
+    height: '70%',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
-  closeIcon: {
-    width: 20,
-    height: 20,
-    marginRight: 15
-  },
-  canselButtonTitle: {
-    fontFamily: 'Roboto',
-    fontSize: 18,
-    color: '#6C6F72'
+  buttonsContainer: {
+    alignItems: 'center'
   }
 })
 

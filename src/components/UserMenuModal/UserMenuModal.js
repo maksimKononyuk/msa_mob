@@ -48,7 +48,10 @@ const UsersMenuModal = ({ logOut }) => {
     (state) => state.error.isCompleteWorkShiftVisible
   )
   const language = useSelector((state) => state.main.language)
-  const translate = useMemo(() => new UserMenuModalTranslate(language))
+  const translate = useMemo(
+    () => new UserMenuModalTranslate(language),
+    [language]
+  )
 
   const textInputHandler = (text, key) => {
     dispatch(setTempDetail(text, key))
@@ -246,7 +249,7 @@ const UsersMenuModal = ({ logOut }) => {
           </Modal>
         </Modal>
         {isCompleteWorkShiftVisible && <CompleteWorkShift logOut={logOut} />}
-        {isSettings && <SettingsComponent setIsSettings={setIsSettings} />}
+        {isSettings && <SettingsComponent />}
         {isErrorComponentVisible && <ErrorComponent />}
       </View>
       {isErrorComponentVisible && <ErrorComponent />}

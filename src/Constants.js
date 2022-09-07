@@ -288,6 +288,16 @@ export class StartFinishButtonTranslate {
         return 'FINISH'
     }
   }
+  getStartAlert() {
+    switch (this.lang) {
+      case 'en':
+        return 'Choose equipment!'
+      case 'ru':
+        return 'Выберите оборудование!'
+      default:
+        return 'Choose equipment!'
+    }
+  }
 }
 export class OrdersTranslate {
   constructor(lang) {
@@ -337,6 +347,53 @@ export class CompleteWorkShiftTranslate {
         return 'Нет'
       default:
         return 'No'
+    }
+  }
+}
+
+export class OperationResultTranslate {
+  constructor(lang) {
+    this.lang = lang
+  }
+  getTitleLable() {
+    switch (this.lang) {
+      case 'en':
+        return 'Operation result'
+      case 'ru':
+        return 'Результат операции'
+      default:
+        return 'Operation result'
+    }
+  }
+}
+export class MainTranslate {
+  constructor(lang) {
+    this.lang = lang
+  }
+  getFinishOrderAlert() {
+    switch (this.lang) {
+      case 'en':
+        return 'Your operation has been completed'
+      case 'ru':
+        return 'Ваша операция завершена'
+      default:
+        return 'Your operation has been completed'
+    }
+  }
+}
+
+export class EquipmentTranslale {
+  constructor(lang) {
+    this.lang = lang
+  }
+  getTitleLabel() {
+    switch (this.lang) {
+      case 'en':
+        return 'Choose equipment'
+      case 'ru':
+        return 'Выберите оборудование'
+      default:
+        return 'Choose equipment'
     }
   }
 }

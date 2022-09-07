@@ -2,11 +2,11 @@ import React, { useMemo } from 'react'
 import { View, Text, Modal, TouchableOpacity, Image } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useDispatch, useSelector } from 'react-redux'
-import { setLanguage } from '../../redux/actionCreators'
+import { setLanguage, setIsUserMenuModal } from '../../redux/actionCreators'
 import { SettingsComponentTranslate } from '../../Constants'
 import styles from './styles'
 
-const SettingsComponent = ({ setIsSettings }) => {
+const SettingsComponent = () => {
   const dispatch = useDispatch()
   const language = useSelector((state) => state.main.language)
   const translate = useMemo(
@@ -24,7 +24,7 @@ const SettingsComponent = ({ setIsSettings }) => {
             onPress={() => {
               AsyncStorage.setItem('lang', 'en')
               dispatch(setLanguage('en'))
-              setIsSettings(false)
+              dispatch(setIsUserMenuModal(false))
             }}
           >
             <Text style={styles.buttonText}>{translate.getEnglishLabel()}</Text>
@@ -35,7 +35,7 @@ const SettingsComponent = ({ setIsSettings }) => {
             onPress={() => {
               AsyncStorage.setItem('lang', 'ru')
               dispatch(setLanguage('ru'))
-              setIsSettings(false)
+              dispatch(setIsUserMenuModal(false))
             }}
           >
             <Text style={styles.buttonText}>{translate.getRussianLabel()}</Text>

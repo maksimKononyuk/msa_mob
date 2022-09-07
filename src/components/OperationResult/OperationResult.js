@@ -1,5 +1,5 @@
-import React from 'react'
-import { View, Text, TouchableOpacity, Image } from 'react-native'
+import React, { useMemo } from 'react'
+import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native'
 import styles from '../../styles/Styles'
 import axios from 'axios'
 import componentStyles from './styles'
@@ -12,6 +12,8 @@ import {
   setErrorMessage,
   setIsErrorComponentVisible
 } from '../../redux/actionCreators'
+import CancelButton from '../CancelButton/CancelButton'
+import { OperationResultTranslate } from '../../Constants'
 import ErrorComponent from '../ErrorComponent/ErrorComponent'
 
 const OperationResult = ({ finishOrder, relationArr }) => {
@@ -19,10 +21,16 @@ const OperationResult = ({ finishOrder, relationArr }) => {
 
   const activeOrder = useSelector((state) => state.main.activeOrder)
 
-  const userId = useSelector((state) => state.main.user.u_id)
+  const userId = useSelector((state) => state.main.user?.u_id)
 
   const isErrorComponentVisible = useSelector(
     (state) => state.error.isErrorComponentVisible
+  )
+
+  const language = useSelector((state) => state.main.language)
+  const translate = useMemo(
+    () => new OperationResultTranslate(language),
+    [language]
   )
 
   const maretialsRequest = (index) => {
@@ -51,58 +59,55 @@ const OperationResult = ({ finishOrder, relationArr }) => {
       }}
     >
       <View style={componentStyles.resultContainer}>
-        <Text style={componentStyles.resultText}>Operation result</Text>
+        <Text style={componentStyles.resultText}>
+          {translate.getTitleLable()}
+        </Text>
       </View>
-      {activeOrder?.operation.relation.map(
-        (item, index) =>
-          relationArr[index] !== false && (
-            <TouchableOpacity
-              activeOpacity={0.5}
-              onPress={() => {
-                dispatch(
-                  setFinishOrderParams({
-                    nextOperationId: item.so_id,
-                    relationId: item._id
-                  })
+      <View style={componentStyles.mainContainer}>
+        <ScrollView>
+          <View style={componentStyles.buttonsContainer}>
+            {activeOrder?.operation.relation.map(
+              (item, index) =>
+                relationArr[index] !== false && (
+                  <TouchableOpacity
+                    activeOpacity={0.5}
+                    onPress={() => {
+                      dispatch(
+                        setFinishOrderParams({
+                          nextOperationId: item.so_id,
+                          relationId: item._id
+                        })
+                      )
+                      if (
+                        activeOrder?.operation.relation[index].function.length >
+                        0
+                      ) {
+                        maretialsRequest(index)
+                        dispatch(setShowMaterialsComponent(true))
+                      } else {
+                        finishOrder(item.so_id, item._id)
+                      }
+                    }}
+                    key={item._id}
+                    style={{
+                      ...styles.center,
+                      ...styles.operationItem,
+                      backgroundColor: item.bgr_color
+                    }}
+                  >
+                    <Text style={componentStyles.itemResultText}>
+                      {item.result}
+                    </Text>
+                    <Image
+                      style={componentStyles.arrowIcon}
+                      source={require('../../assets/images/arrow_white.png')}
+                    />
+                  </TouchableOpacity>
                 )
-                if (
-                  activeOrder?.operation.relation[index].function.length > 0
-                ) {
-                  maretialsRequest(index)
-                  dispatch(setShowMaterialsComponent(true))
-                } else {
-                  finishOrder(item.so_id, item._id)
-                }
-              }}
-              key={item._id}
-              style={{
-                ...styles.center,
-                ...styles.operationItem,
-                backgroundColor: item.bgr_color
-              }}
-            >
-              <Text style={componentStyles.itemResultText}>{item.result}</Text>
-              <Image
-                style={componentStyles.arrowIcon}
-                source={require('../../assets/images/arrow_white.png')}
-              />
-            </TouchableOpacity>
-          )
-      )}
-      <View style={componentStyles.canselButtonContainer}>
-        <TouchableOpacity
-          activeOpacity={0.5}
-          style={{ ...styles.center, ...styles.cancelContainer }}
-          onPress={() => {
-            dispatch(setModalVisible(false))
-          }}
-        >
-          <Image
-            style={componentStyles.closeIcon}
-            source={require('../../assets/images/close.png')}
-          />
-          <Text style={componentStyles.canselButtonTitle}>Cancel</Text>
-        </TouchableOpacity>
+            )}
+          </View>
+        </ScrollView>
+        <CancelButton handler={() => dispatch(setModalVisible(false))} />
       </View>
       {isErrorComponentVisible && <ErrorComponent />}
     </View>

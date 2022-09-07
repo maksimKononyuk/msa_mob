@@ -8,7 +8,7 @@ import { options, TimerTranslate } from '../../Constants'
 const Timer = () => {
   const orderStarted = useSelector((state) => state.main.orderStarted)
   const language = useSelector((state) => state.main.language)
-  const translate = useMemo(() => new TimerTranslate(language))
+  const translate = useMemo(() => new TimerTranslate(language), [language])
   return (
     <View style={componentStyles.container}>
       <Text style={componentStyles.titleText}>{translate.getTitleLable()}</Text>

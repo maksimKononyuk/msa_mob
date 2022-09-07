@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import {
   ScrollView,
   View,
@@ -10,6 +10,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux'
 import { setIsLoading } from '../../redux/actionCreators'
 import EquipmentItem from '../EquipmentItem/EquipmentItem'
+import { EquipmentTranslale } from '../../Constants'
 import styles from './styles'
 
 const Equipment = ({ equipmentRequest }) => {
@@ -17,6 +18,10 @@ const Equipment = ({ equipmentRequest }) => {
   const isLoading = useSelector((state) => state.equipmentItem.isLoading)
   const equipmentArr = useSelector((state) => state.main.equipmentArr)
   const o_id = useSelector((state) => state.main.activeOrder?.description.o_id)
+
+  const language = useSelector((state) => state.main.language)
+  const translate = useMemo(() => new EquipmentTranslale(language), [language])
+
   const buttonHandler = () => {
     equipmentRequest(o_id)
     dispatch(setIsLoading(true))
@@ -25,7 +30,7 @@ const Equipment = ({ equipmentRequest }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headetText}>Choose equipment</Text>
+        <Text style={styles.headetText}>{translate.getTitleLabel()}</Text>
         {isLoading ? (
           <ActivityIndicator size='large' color='#A9A9A9' />
         ) : (

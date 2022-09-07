@@ -71,7 +71,7 @@ const StartFinishButton = ({ startOrder }) => {
               ? dispatch(setIsConfirmation(true))
               : isEquipmentEmpty || selectedItems.length > 0
               ? dispatch(setIsConfirmation(true))
-              : Alert.alert('Choose equipment!')
+              : Alert.alert(translate.getStartAlert())
           }}
         >
           <Text
