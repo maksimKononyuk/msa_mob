@@ -451,7 +451,7 @@ function Main({ route, navigation }) {
       {!activeBarCode && <Orders />}
       <View style={{ flexDirection: 'row', width: '100%', flex: 1 }}>
         <View style={{ flex: 3 }}>
-          {!activeBarCode && <Carousel />}
+          {!activeBarCode && activeOrder && <Carousel />}
           {activeIndex === 0 && orders.length && !activeBarCode ? (
             <Messages />
           ) : null}

@@ -1,7 +1,11 @@
 import React, { useMemo } from 'react'
 import { View, TouchableOpacity, Image, Text, Alert } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { setModalVisible, setIsConfirmation } from '../../redux/actionCreators'
+import {
+  setModalVisible,
+  setIsConfirmation,
+  setActiveIndex
+} from '../../redux/actionCreators'
 import styles from '../../styles/Styles'
 import componentStyles from './styles'
 import { StartFinishButtonTranslate } from '../../Constants'
@@ -32,7 +36,10 @@ const StartFinishButton = ({ startOrder }) => {
             ]}
             onPress={
               orderStarted
-                ? () => dispatch(setModalVisible(true))
+                ? () => {
+                    dispatch(setActiveIndex(1))
+                    dispatch(setModalVisible(true))
+                  }
                 : () => startOrder()
             }
           >
