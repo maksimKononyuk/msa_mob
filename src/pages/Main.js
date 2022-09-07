@@ -363,7 +363,6 @@ function Main({ route, navigation }) {
   useEffect(() => {
     let appInterval
     if (activeOrder) {
-      equipmentRequest(activeOrder.description.o_id)
       appInterval = setInterval(() => {
         equipmentRequest(activeOrder.description.o_id)
       }, 2000)
