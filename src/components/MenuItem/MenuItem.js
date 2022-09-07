@@ -1,7 +1,6 @@
 import React from 'react'
 import { Text, TouchableOpacity } from 'react-native'
 import { useSelector } from 'react-redux'
-
 import styles from '../../styles/Styles'
 
 const MenuItem = ({ item, index, carousel }) => {
@@ -15,7 +14,8 @@ const MenuItem = ({ item, index, carousel }) => {
         backgroundColor: 'transparent',
         height: 10,
         padding: 0,
-        margin: 0
+        margin: 0,
+        width: 130
       }}
       onPress={() => orderStarted && carousel.snapToItem(index, true, true)}
     >

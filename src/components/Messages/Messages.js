@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { View, Text, ScrollView } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import {
@@ -8,15 +8,18 @@ import {
   setIsErrorComponentVisible
 } from '../../redux/actionCreators'
 import MessageItem from '../MessageItem/MessageItem'
+import { MessagesTranslale } from '../../Constants'
 import NewMessagesItem from '../NewMessageItem/NewMessageItem'
 import styles from './styles'
 
 const Messages = () => {
   const dispatch = useDispatch()
   const activeOrder = useSelector((state) => state.main.activeOrder)
-  const userName = useSelector((state) => state.main.user.name)
   const userId = useSelector((state) => state.main.user?.u_id)
   const messages = useSelector((state) => state.messages.messages)
+
+  const language = useSelector((state) => state.main.language)
+  const translate = useMemo(() => new MessagesTranslale(language), [language])
 
   useEffect(() => {
     const getMessage = setInterval(() => {
@@ -40,7 +43,7 @@ const Messages = () => {
     <View style={styles.container}>
       <ScrollView style={styles.scroll}>
         {messages.length === 0 ? (
-          <Text style={styles.notMessageText}>You have not messages</Text>
+          <Text style={styles.notMessageText}>{translate.getInfoLabel()}</Text>
         ) : (
           messages.map((item, index) => {
             return (

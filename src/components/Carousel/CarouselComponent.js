@@ -28,7 +28,7 @@ const CarouselComponent = () => {
         callbackOffsetMargin={20}
         data={getCarouselItems(language)}
         sliderWidth={windowWidth > 480 ? windowWidth * 0.75 : windowWidth}
-        itemWidth={windowWidth > 480 ? windowWidth * 0.3 : windowWidth / 3}
+        itemWidth={windowWidth > 480 ? windowWidth * 0.3 : windowWidth / 2.9}
         sliderHeight={60}
         itemHeight={60}
         renderItem={renderCarouselItem}

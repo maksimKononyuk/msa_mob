@@ -366,6 +366,47 @@ export class OperationResultTranslate {
     }
   }
 }
+export class EquipmentTranslale {
+  constructor(lang) {
+    this.lang = lang
+  }
+  getTitleLabel() {
+    switch (this.lang) {
+      case 'en':
+        return 'Choose equipment'
+      case 'ru':
+        return 'Выберите оборудование'
+      default:
+        return 'Choose equipment'
+    }
+  }
+}
+
+export class MessagesTranslale {
+  constructor(lang) {
+    this.lang = lang
+  }
+  getInfoLabel() {
+    switch (this.lang) {
+      case 'en':
+        return 'You have not messages'
+      case 'ru':
+        return 'У вас нет сообщений'
+      default:
+        return 'You have not messages'
+    }
+  }
+  getNewMessageLabel() {
+    switch (this.lang) {
+      case 'en':
+        return 'New message'
+      case 'ru':
+        return 'Новое сообщение'
+      default:
+        return 'New message'
+    }
+  }
+}
 export class MainTranslate {
   constructor(lang) {
     this.lang = lang
@@ -381,19 +422,38 @@ export class MainTranslate {
     }
   }
 }
-
-export class EquipmentTranslale {
+export class AuthTranslate {
   constructor(lang) {
     this.lang = lang
   }
-  getTitleLabel() {
+  getSignInLabel() {
     switch (this.lang) {
       case 'en':
-        return 'Choose equipment'
+        return 'Sign in'
       case 'ru':
-        return 'Выберите оборудование'
+        return 'Вход'
       default:
-        return 'Choose equipment'
+        return 'Sign in'
+    }
+  }
+  getLoginLabel() {
+    switch (this.lang) {
+      case 'en':
+        return 'Login'
+      case 'ru':
+        return 'Логин'
+      default:
+        return 'Login'
+    }
+  }
+  getPasswordLabel() {
+    switch (this.lang) {
+      case 'en':
+        return 'Password'
+      case 'ru':
+        return 'Пароль'
+      default:
+        return 'Password'
     }
   }
 }

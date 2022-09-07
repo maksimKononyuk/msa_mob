@@ -116,17 +116,6 @@ const TechMaps = () => {
             resizeMode={'contain'}
           />
         </ImageZoom>
-        {/* )} */}
-        {/* {item?.file_name.split('.').pop() == 'pdf' && <Text>PDF</Text>}
-        {item?.file_name.split('.').pop() == 'm4v' && (
-          <Video
-            style={{ height: '80%' }}
-            source={{ uri: item.file_url }}
-            resizeMode='contain'
-            useNativeControls={true}
-            shouldPlay={true}
-          />
-        )} */}
       </Modal>
     </View>
   )

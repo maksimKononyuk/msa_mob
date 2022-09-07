@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useRef, useState } from 'react'
+import React, { useEffect, useCallback, useRef, useState, useMemo } from 'react'
 import { View, Text, Image, Alert, TouchableOpacity } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as Animatable from 'react-native-animatable'
@@ -17,7 +17,7 @@ import {
   setShowError,
   setLanguage
 } from '../redux/actionCreators'
-import { storageClear } from '../Constants'
+import { storageClear, AuthTranslate } from '../Constants'
 import { transform } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes'
 
 let customFonts = {
@@ -31,6 +31,9 @@ function Auth({ navigation }) {
   const password = useSelector((state) => state.auth.password)
   const appIsReady = useSelector((state) => state.auth.appIsReady)
   const showError = useSelector((state) => state.auth.showError)
+
+  const language = useSelector((state) => state.main.language)
+  const translate = useMemo(() => new AuthTranslate(language), [language])
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
@@ -115,7 +118,7 @@ function Auth({ navigation }) {
           source={require('../assets/images/auth.png')}
         />
         <TextInput
-          label='Login'
+          label={translate.getLoginLabel()}
           value={login}
           onChangeText={(text) => dispatch(setLogin(text))}
           style={styles.authInput}
@@ -128,7 +131,7 @@ function Auth({ navigation }) {
         />
         <View style={{ width: '100%' }}>
           <TextInput
-            label='Password'
+            label={translate.getPasswordLabel()}
             value={password}
             onChangeText={(text) => dispatch(setPassword(text))}
             style={styles.authInput}
@@ -160,7 +163,7 @@ function Auth({ navigation }) {
           onPress={() => tryAuth()}
           style={styles.authButton}
         >
-          <Text style={styles.authText}>Sign in</Text>
+          <Text style={styles.authText}>{translate.getSignInLabel()}</Text>
         </TouchableOpacity>
       </View>
 

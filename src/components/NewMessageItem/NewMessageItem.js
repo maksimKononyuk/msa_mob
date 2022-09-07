@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React from 'react'
+import React, { useMemo } from 'react'
 import {
   View,
   TouchableOpacity,
@@ -15,10 +15,14 @@ import {
 } from '../../redux/actionCreators'
 import sendButton from '../../assets/images/send.png'
 import styles from './styles'
+import { MessagesTranslale } from '../../Constants'
 
 const NewMessagesItem = ({ orderId, userId }) => {
   const dispatch = useDispatch()
   const newMessage = useSelector((state) => state.newMessageItem.newMessage)
+
+  const language = useSelector((state) => state.main.language)
+  const translate = useMemo(() => new MessagesTranslale(language))
 
   const buttonHendler = () => {
     Keyboard.dismiss()
@@ -40,7 +44,7 @@ const NewMessagesItem = ({ orderId, userId }) => {
     <View style={styles.container}>
       <TextInput
         style={styles.input}
-        placeholder='New message'
+        placeholder={translate.getNewMessageLabel()}
         value={newMessage}
         onChangeText={(text) => dispatch(setNewMessage(text))}
       />
