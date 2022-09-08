@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { View, Text } from 'react-native'
 import { useSelector } from 'react-redux'
 import OperationContainer from '../OperationContainer/OperationContainer'
 import StartFinishButton from '../StartFinishButton/StartFinishButton'
 import Timer from '../Timer/Timer'
+import { RightBlockTranslate } from '../../Constants'
 import styles from './stylesRightBlock'
 
 const RightBlock = ({ startOrder }) => {
@@ -12,27 +13,32 @@ const RightBlock = ({ startOrder }) => {
   const equipmentArr = useSelector((state) => state.main.equipmentArr)
   const selectedItems = useSelector((state) => state.main.selectedItems)
 
+  const language = useSelector((state) => state.main.language)
+  const translate = useMemo(() => new RightBlockTranslate(language))
+
   return (
     <View style={styles.container}>
       <View>
         <OperationContainer />
         <View style={styles.previousOperation}>
-          <Text style={styles.previousOperationTitle}>Previous operation</Text>
+          <Text style={styles.previousOperationTitle}>
+            {translate.getPreviousOperationLabel()}
+          </Text>
           <Text style={styles.previousOperationText}>
             {previousOperation.length > 0
               ? previousOperation.length[0].name_prev_operation
-              : 'No previous operations'}
+              : translate.getNoPreviousOperationLabel()}
           </Text>
         </View>
         <View style={styles.resultPreviousOperation}>
           <Text style={{ ...styles.previousOperationTitle, paddingLeft: 10 }}>
-            Result of previous operation
+            {translate.getResultOfPreviousOperationLabel()}
           </Text>
           <View style={styles.previousOperationTextContainer}>
             <Text style={styles.previousOperationText}>
               {previousOperation.length > 0
                 ? previousOperation.length[0].result_prev_operation
-                : 'No previous operations'}
+                : translate.getNoPreviousOperationLabel()}
             </Text>
           </View>
         </View>

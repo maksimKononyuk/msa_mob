@@ -457,3 +457,39 @@ export class AuthTranslate {
     }
   }
 }
+
+export class RightBlockTranslate {
+  constructor(lang) {
+    this.lang = lang
+  }
+  getPreviousOperationLabel() {
+    switch (this.lang) {
+      case 'en':
+        return 'Previous operation'
+      case 'ru':
+        return 'Предыдущая операция'
+      default:
+        return 'Previous operation'
+    }
+  }
+  getResultOfPreviousOperationLabel() {
+    switch (this.lang) {
+      case 'en':
+        return 'Result of Previous operation'
+      case 'ru':
+        return 'Результат предыдущей операции'
+      default:
+        return 'Result of Previous operation'
+    }
+  }
+  getNoPreviousOperationLabel() {
+    switch (this.lang) {
+      case 'en':
+        return 'No previous operation'
+      case 'ru':
+        return 'Нет предыдущей операции'
+      default:
+        return 'No previous operation'
+    }
+  }
+}
