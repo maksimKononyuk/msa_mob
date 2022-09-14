@@ -16,19 +16,6 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center'
   },
-  menuItem: {
-    width: '85%',
-    height: 70,
-    backgroundColor: '#242424',
-    marginBottom: 15,
-    justifyContent: 'center',
-    paddingLeft: 20
-  },
-  menuItemText: {
-    color: '#fff',
-    fontFamily: 'Montserrat',
-    fontSize: 18
-  },
   input: {
     width: '85%',
     height: 60,

@@ -2,7 +2,11 @@ import React, { useMemo } from 'react'
 import { View, Text, Modal, TouchableOpacity, Image } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useDispatch, useSelector } from 'react-redux'
-import { setLanguage, setIsUserMenuModal } from '../../redux/actionCreators'
+import {
+  setLanguage,
+  setIsUserMenuModal,
+  setIsSettingsVisible
+} from '../../redux/actionCreators'
 import { SettingsComponentTranslate } from '../../Constants'
 import styles from './styles'
 
@@ -24,6 +28,7 @@ const SettingsComponent = () => {
             onPress={() => {
               AsyncStorage.setItem('lang', 'en')
               dispatch(setLanguage('en'))
+              dispatch(setIsSettingsVisible())
               dispatch(setIsUserMenuModal(false))
             }}
           >
@@ -35,6 +40,7 @@ const SettingsComponent = () => {
             onPress={() => {
               AsyncStorage.setItem('lang', 'ru')
               dispatch(setLanguage('ru'))
+              dispatch(setIsSettingsVisible())
               dispatch(setIsUserMenuModal(false))
             }}
           >

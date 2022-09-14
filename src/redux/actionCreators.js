@@ -46,7 +46,8 @@ import {
   SET_USER,
   SET_USER_MENU_ORDERS,
   SET_IS_EQUIPMENT_LOADING,
-  SET_LANGUAGE
+  SET_LANGUAGE,
+  SET_IS_SETTINGS_VISIBLE
 } from './actionTypes'
 
 // For mainReducer
@@ -357,6 +358,12 @@ export const setCreatedOrderId = (data) => {
   return {
     type: SET_CREATED_ORDER_ID,
     data
+  }
+}
+
+export const setIsSettingsVisible = () => {
+  return {
+    type: SET_IS_SETTINGS_VISIBLE
   }
 }
 

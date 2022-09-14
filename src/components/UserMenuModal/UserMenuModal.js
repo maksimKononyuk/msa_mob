@@ -23,8 +23,10 @@ import {
   setTempDetail,
   setCreatedOrderId,
   setIsErrorComponentVisible,
-  setErrorMessage
+  setErrorMessage,
+  setIsSettingsVisible
 } from '../../redux/actionCreators'
+import UserMenuItem from '../UserMenuItem/UserMenuItem'
 import { useDispatch, useSelector } from 'react-redux'
 import { UserMenuModalTranslate } from '../../Constants'
 import ErrorComponent from '../ErrorComponent/ErrorComponent'
@@ -32,7 +34,6 @@ import ErrorComponent from '../ErrorComponent/ErrorComponent'
 const UsersMenuModal = ({ logOut }) => {
   const [isModalNewOrder, setIsModalNewOrder] = useState(false)
   const [isModalGetDetails, setIsModalGetDetails] = useState(false)
-  const [isSettings, setIsSettings] = useState(false)
 
   const dispatch = useDispatch()
   const isCompleteWorkShiftVisible = useSelector(
@@ -47,6 +48,10 @@ const UsersMenuModal = ({ logOut }) => {
   const isErrorComponentVisible = useSelector(
     (state) => state.error.isCompleteWorkShiftVisible
   )
+  const isSettingsVisible = useSelector(
+    (state) => state.usersMenuModal.isSettingsVisible
+  )
+
   const language = useSelector((state) => state.main.language)
   const translate = useMemo(
     () => new UserMenuModalTranslate(language),
@@ -136,33 +141,19 @@ const UsersMenuModal = ({ logOut }) => {
     <Modal animationType='slide' transparent={true} visible={true}>
       <View style={componentStyles.container}>
         <View style={componentStyles.menuItemBlock}>
-          <TouchableOpacity
-            activeOpacity={0.5}
-            style={componentStyles.menuItem}
-            onPress={getNewOrder}
-          >
-            <Text style={componentStyles.menuItemText}>
-              {translate.getNewOrderLabel()}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.5}
-            style={componentStyles.menuItem}
-            onPress={() => dispatch(setIsCompleteWorkShiftVisible(true))}
-          >
-            <Text style={componentStyles.menuItemText}>
-              {translate.getLogoutLabel()}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.5}
-            style={componentStyles.menuItem}
-            onPress={() => setIsSettings(true)}
-          >
-            <Text style={componentStyles.menuItemText}>
-              {translate.getSettingsLabel()}
-            </Text>
-          </TouchableOpacity>
+          <UserMenuItem
+            title={translate.getNewOrderLabel()}
+            handler={getNewOrder}
+          />
+          <UserMenuItem
+            title={translate.getSettingsLabel()}
+            handler={() => dispatch(setIsSettingsVisible())}
+          />
+          <UserMenuItem
+            title={translate.getLogoutLabel()}
+            handler={() => dispatch(setIsCompleteWorkShiftVisible(true))}
+          />
+          <UserMenuItem title={translate.getExitLabel()} handler={() => {}} />
         </View>
         <View style={componentStyles.closeButtomContainer}>
           <CancelButton handler={() => dispatch(setIsUserMenuModal(false))} />
@@ -249,7 +240,7 @@ const UsersMenuModal = ({ logOut }) => {
           </Modal>
         </Modal>
         {isCompleteWorkShiftVisible && <CompleteWorkShift logOut={logOut} />}
-        {isSettings && <SettingsComponent />}
+        {isSettingsVisible && <SettingsComponent />}
         {isErrorComponentVisible && <ErrorComponent />}
       </View>
       {isErrorComponentVisible && <ErrorComponent />}

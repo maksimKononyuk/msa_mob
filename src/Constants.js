@@ -205,6 +205,16 @@ export class UserMenuModalTranslate {
         return 'Settings'
     }
   }
+  getExitLabel() {
+    switch (this.lang) {
+      case 'en':
+        return 'Exit'
+      case 'ru':
+        return 'Закрыть'
+      default:
+        return 'Exit'
+    }
+  }
   getVersionLabel() {
     switch (this.lang) {
       case 'en':
