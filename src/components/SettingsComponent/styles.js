@@ -49,6 +49,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     alignSelf: 'flex-start',
     padding: 5
+  },
+  buttonContainer: {
+    paddingBottom: 10,
+    alignItems: 'center',
+    borderColor: '#bbb',
+    borderTopWidth: 0.5
   }
 })
 

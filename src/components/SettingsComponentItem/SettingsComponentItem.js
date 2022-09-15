@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Text, Picker } from 'react-native'
+import styles from './styles'
 
 const SettingsComponentItem = ({
   title,
@@ -8,22 +9,13 @@ const SettingsComponentItem = ({
   handler
 }) => {
   return (
-    <View style={{ marginTop: 15 }}>
-      <Text style={{ color: '#fff', marginBottom: 5 }}>{title}</Text>
-      <View
-        style={{
-          backgroundColor: '#fff',
-          borderRadius: 5,
-          paddingHorizontal: 10
-        }}
-      >
+    <View style={styles.container}>
+      <Text style={styles.titleText}>{title}</Text>
+      <View style={styles.pickerContainer}>
         <Picker
           mode={'dropdown'}
           selectedValue={selectedValue}
-          style={{
-            height: 60,
-            color: '#000'
-          }}
+          style={styles.pickerStyle}
           onValueChange={(itemValue) => {
             handler(itemValue)
           }}
