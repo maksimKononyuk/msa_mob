@@ -15,9 +15,12 @@ import {
   setPassword,
   setAppIsReady,
   setShowError,
-  setLanguage
+  setLanguage,
+  setIsSettingsVisible
 } from '../redux/actionCreators'
 import { storageClear, AuthTranslate } from '../Constants'
+import MenuButton from '../components/MenuButton/MenuButton'
+import SettingsComponent from '../components/SettingsComponent/SettingsComponent'
 import { transform } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes'
 
 let customFonts = {
@@ -27,6 +30,9 @@ let customFonts = {
 
 function Auth({ navigation }) {
   const dispatch = useDispatch()
+  const isSettingsVisible = useSelector(
+    (state) => state.usersMenuModal.isSettingsVisible
+  )
   const login = useSelector((state) => state.auth.login)
   const password = useSelector((state) => state.auth.password)
   const appIsReady = useSelector((state) => state.auth.appIsReady)
@@ -111,7 +117,24 @@ function Auth({ navigation }) {
   }
 
   return (
-    <View style={styles.container} onLayout={onLayoutRootView}>
+    <View
+      style={[
+        styles.container,
+        {
+          justifyContent: 'space-between',
+          paddingBottom: 100,
+          paddingVertical: 20,
+          paddingHorizontal: 20
+        }
+      ]}
+      onLayout={onLayoutRootView}
+    >
+      <View style={{ alignSelf: 'flex-end' }}>
+        <MenuButton
+          buttonColor={'#000'}
+          handler={() => dispatch(setIsSettingsVisible())}
+        />
+      </View>
       <View style={styles.authContainer}>
         <Image
           style={{ width: 230, height: 100, paddingBottom: 20 }}
@@ -166,7 +189,7 @@ function Auth({ navigation }) {
           <Text style={styles.authText}>{translate.getSignInLabel()}</Text>
         </TouchableOpacity>
       </View>
-
+      {isSettingsVisible && <SettingsComponent />}
       {showError && (
         <Animatable.View
           style={styles.authError}

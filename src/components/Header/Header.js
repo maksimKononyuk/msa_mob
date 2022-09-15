@@ -5,6 +5,7 @@ import styles from '../../styles/Styles'
 import componentStyles from './styles'
 import { setIsUserMenuModal } from '../../redux/actionCreators'
 import UsersMenuModal from '../UserMenuModal/UserMenuModal'
+import MenuButton from '../MenuButton/MenuButton'
 import { useDispatch, useSelector } from 'react-redux'
 
 const Header = ({ logOut, userName }) => {
@@ -20,14 +21,10 @@ const Header = ({ logOut, userName }) => {
         />
         <Text style={styles.headerName}>{userName}</Text>
       </View>
-      <TouchableOpacity
-        activeOpacity={0.5}
-        style={componentStyles.headerButton}
-        onPress={() => dispatch(setIsUserMenuModal(true))}
-      >
-        <View style={componentStyles.headerButtonLine}></View>
-        <View style={componentStyles.headerButtonLine}></View>
-      </TouchableOpacity>
+      <MenuButton
+        buttonColor={'#fff'}
+        handler={() => dispatch(setIsUserMenuModal(true))}
+      />
       {isUserMenuModal && <UsersMenuModal logOut={logOut} />}
     </View>
   )

@@ -49,8 +49,6 @@ const styles = StyleSheet.create({
   authContainer: {
     width: 350,
     padding: 60,
-    marginTop: -30,
-    display: 'flex',
     alignItems: 'center'
   },
   headerContainer: {

@@ -89,7 +89,14 @@ const SettingsComponent = () => {
             />
           </View>
         </View>
-        <View style={{ paddingBottom: 10, alignItems: 'center' }}>
+        <View
+          style={{
+            paddingBottom: 10,
+            alignItems: 'center',
+            borderColor: '#bbb',
+            borderTopWidth: 0.5
+          }}
+        >
           <OKButton handler={okButtonHandler} />
           <CancelButton handler={canselHandler} />
           <Text style={styles.versionText}>
