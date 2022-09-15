@@ -27,6 +27,7 @@ import {
   setIsSettingsVisible
 } from '../../redux/actionCreators'
 import UserMenuItem from '../UserMenuItem/UserMenuItem'
+import OKButton from '../OKButton/OKButton'
 import { useDispatch, useSelector } from 'react-redux'
 import { UserMenuModalTranslate } from '../../Constants'
 import ErrorComponent from '../ErrorComponent/ErrorComponent'
@@ -227,13 +228,7 @@ const UsersMenuModal = ({ logOut }) => {
                         </View>
                       ))}
                 </ScrollView>
-                <TouchableOpacity
-                  activeOpacity={0.5}
-                  style={componentStyles.okButton}
-                  onPress={() => sendFormData()}
-                >
-                  <Text style={componentStyles.okButtonText}>OK!</Text>
-                </TouchableOpacity>
+                <OKButton handler={sendFormData} />
                 <CancelButton handler={() => setIsModalGetDetails(false)} />
               </View>
             </View>

@@ -153,6 +153,26 @@ export class SettingsComponentTranslate {
         return 'Russian'
     }
   }
+  getHostingLabel() {
+    switch (this.lang) {
+      case 'en':
+        return 'Hosting'
+      case 'ru':
+        return 'Хостинг'
+      default:
+        return 'Hosting'
+    }
+  }
+  getSettingsLabel() {
+    switch (this.lang) {
+      case 'en':
+        return 'Settings'
+      case 'ru':
+        return 'Настройки'
+      default:
+        return 'Settings'
+    }
+  }
 }
 
 export class CancelButtonTranslate {
