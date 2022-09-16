@@ -1,23 +1,12 @@
 import React, { useMemo, useState } from 'react'
-import {
-  View,
-  Text,
-  Modal,
-  TouchableOpacity,
-  Image,
-  Picker
-} from 'react-native'
+import { View, Text, Modal } from 'react-native'
 import * as Application from 'expo-application'
 import OKButton from '../OKButton/OKButton'
 import CancelButton from '../CancelButton/CancelButton'
 import SettingsComponentItem from '../SettingsComponentItem/SettingsComponentItem'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  setLanguage,
-  setIsUserMenuModal,
-  setIsSettingsVisible
-} from '../../redux/actionCreators'
+import { setLanguage, setIsUserMenuModal } from '../../redux/actionCreators'
 import {
   SettingsComponentTranslate,
   UserMenuModalTranslate
@@ -25,7 +14,7 @@ import {
 import axios from 'axios'
 import styles from './styles'
 
-const SettingsComponent = () => {
+const SettingsComponent = ({ setIsSettingsVisible }) => {
   const dispatch = useDispatch()
   const globalLanguage = useSelector((state) => state.main.language)
   const [hosting, setHosting] = useState('https://demomsa.com/api')
@@ -42,11 +31,11 @@ const SettingsComponent = () => {
     setStateLanguage(itemValue)
   }
 
-  const changeHostingHandler = (itemValue) => {
-    setHosting(itemValue)
+  const changeHostingHandler = (hosting) => {
+    setHosting(hosting)
   }
   const canselHandler = () => {
-    dispatch(setIsSettingsVisible())
+    setIsSettingsVisible((prev) => !prev)
     dispatch(setIsUserMenuModal(false))
   }
   const okButtonHandler = () => {
@@ -67,13 +56,8 @@ const SettingsComponent = () => {
           <View style={{ paddingHorizontal: 25 }}>
             <SettingsComponentItem
               title={translate.getHostingLabel()}
-              selectedObjects={[
-                {
-                  label: 'https://demomsa.com',
-                  value: 'https://demomsa.com/api'
-                }
-              ]}
-              selectedValue={hosting}
+              type={'input'}
+              value={hosting}
               handler={changeHostingHandler}
             />
             <SettingsComponentItem
@@ -82,8 +66,9 @@ const SettingsComponent = () => {
                 { label: translate.getEnglishLabel(), value: 'en' },
                 { label: translate.getRussianLabel(), value: 'ru' }
               ]}
-              selectedValue={language}
+              value={language}
               handler={changeLanguageHandler}
+              type={'picker'}
             />
           </View>
         </View>

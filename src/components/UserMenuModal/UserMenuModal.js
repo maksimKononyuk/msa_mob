@@ -4,7 +4,7 @@ import {
   Text,
   Modal,
   TouchableOpacity,
-  Image,
+  BackHandler,
   TextInput,
   ScrollView
 } from 'react-native'
@@ -23,8 +23,7 @@ import {
   setTempDetail,
   setCreatedOrderId,
   setIsErrorComponentVisible,
-  setErrorMessage,
-  setIsSettingsVisible
+  setErrorMessage
 } from '../../redux/actionCreators'
 import UserMenuItem from '../UserMenuItem/UserMenuItem'
 import OKButton from '../OKButton/OKButton'
@@ -49,9 +48,7 @@ const UsersMenuModal = ({ logOut }) => {
   const isErrorComponentVisible = useSelector(
     (state) => state.error.isCompleteWorkShiftVisible
   )
-  const isSettingsVisible = useSelector(
-    (state) => state.usersMenuModal.isSettingsVisible
-  )
+  const [isSettingsVisible, setIsSettingsVisible] = useState(false)
 
   const language = useSelector((state) => state.main.language)
   const translate = useMemo(
@@ -148,13 +145,16 @@ const UsersMenuModal = ({ logOut }) => {
           />
           <UserMenuItem
             title={translate.getSettingsLabel()}
-            handler={() => dispatch(setIsSettingsVisible())}
+            handler={() => setIsSettingsVisible((prev) => !prev)}
           />
           <UserMenuItem
             title={translate.getLogoutLabel()}
             handler={() => dispatch(setIsCompleteWorkShiftVisible(true))}
           />
-          <UserMenuItem title={translate.getExitLabel()} handler={() => {}} />
+          <UserMenuItem
+            title={translate.getExitLabel()}
+            handler={() => BackHandler.exitApp()}
+          />
         </View>
         <View style={componentStyles.closeButtomContainer}>
           <CancelButton handler={() => dispatch(setIsUserMenuModal(false))} />
@@ -235,7 +235,9 @@ const UsersMenuModal = ({ logOut }) => {
           </Modal>
         </Modal>
         {isCompleteWorkShiftVisible && <CompleteWorkShift logOut={logOut} />}
-        {isSettingsVisible && <SettingsComponent />}
+        {isSettingsVisible && (
+          <SettingsComponent setIsSettingsVisible={setIsSettingsVisible} />
+        )}
         {isErrorComponentVisible && <ErrorComponent />}
       </View>
       {isErrorComponentVisible && <ErrorComponent />}

@@ -15,8 +15,7 @@ import {
   setPassword,
   setAppIsReady,
   setShowError,
-  setLanguage,
-  setIsSettingsVisible
+  setLanguage
 } from '../redux/actionCreators'
 import { storageClear, AuthTranslate } from '../Constants'
 import MenuButton from '../components/MenuButton/MenuButton'
@@ -30,9 +29,7 @@ let customFonts = {
 
 function Auth({ navigation }) {
   const dispatch = useDispatch()
-  const isSettingsVisible = useSelector(
-    (state) => state.usersMenuModal.isSettingsVisible
-  )
+  const [isSettingsVisible, setIsSettingsVisible] = useState(false)
   const login = useSelector((state) => state.auth.login)
   const password = useSelector((state) => state.auth.password)
   const appIsReady = useSelector((state) => state.auth.appIsReady)
@@ -132,7 +129,7 @@ function Auth({ navigation }) {
       <View style={{ alignSelf: 'flex-end' }}>
         <MenuButton
           buttonColor={'#000'}
-          handler={() => dispatch(setIsSettingsVisible())}
+          handler={() => setIsSettingsVisible((prev) => !prev)}
         />
       </View>
       <View style={styles.authContainer}>
@@ -189,7 +186,9 @@ function Auth({ navigation }) {
           <Text style={styles.authText}>{translate.getSignInLabel()}</Text>
         </TouchableOpacity>
       </View>
-      {isSettingsVisible && <SettingsComponent />}
+      {isSettingsVisible && (
+        <SettingsComponent setIsSettingsVisible={setIsSettingsVisible} />
+      )}
       {showError && (
         <Animatable.View
           style={styles.authError}

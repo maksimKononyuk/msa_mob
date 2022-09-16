@@ -2,16 +2,14 @@ import {
   SET_CREATED_ORDER_ID,
   SET_IS_COMPLETE_WORK_SHIFT_VISIBLE,
   SET_TEMP_DETAIL,
-  SET_USER_MENU_ORDERS,
-  SET_IS_SETTINGS_VISIBLE
+  SET_USER_MENU_ORDERS
 } from '../actionTypes'
 
 const initialState = {
   isCompleteWorkShiftVisible: false,
   orders: [],
   tempDetail: [],
-  createdOrderId: null,
-  isSettingsVisible: false
+  createdOrderId: null
 }
 
 export default usersMenuModalReducer = (state = initialState, action) => {
@@ -38,8 +36,6 @@ export default usersMenuModalReducer = (state = initialState, action) => {
       }
     case SET_CREATED_ORDER_ID:
       return { ...state, createdOrderId: action.data }
-    case SET_IS_SETTINGS_VISIBLE:
-      return { ...state, isSettingsVisible: !state.isSettingsVisible }
     default:
       return state
   }
