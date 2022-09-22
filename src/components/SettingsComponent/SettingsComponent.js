@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import { View, Text, Modal } from 'react-native'
 import * as Application from 'expo-application'
 import OKButton from '../OKButton/OKButton'
@@ -27,6 +27,14 @@ const SettingsComponent = ({ setIsSettingsVisible }) => {
     () => new UserMenuModalTranslate(language),
     [language]
   )
+  useEffect(() => {
+    const setHost = async () => {
+      const host = await AsyncStorage.getItem('hosting')
+      if (host) setHosting(host)
+      axios.defaults.baseURL = hosting
+    }
+    setHost()
+  }, [])
   const changeLanguageHandler = (itemValue) => {
     setStateLanguage(itemValue)
   }
@@ -40,6 +48,7 @@ const SettingsComponent = ({ setIsSettingsVisible }) => {
   }
   const okButtonHandler = () => {
     AsyncStorage.setItem('lang', language)
+    AsyncStorage.setItem('hosting', hosting)
     dispatch(setLanguage(language))
     axios.defaults.baseURL = hosting
     canselHandler()
