@@ -31,7 +31,7 @@ const Messages = () => {
         .catch((err) => {
           console.log('Network error when receiving messages ' + err)
           dispatch(setErrorMessage('when receiving messages ' + err))
-          dispatch(setIsErrorComponentVisible(true))
+          // dispatch(setIsErrorComponentVisible(true))
         })
     }, 1000)
     return () => {

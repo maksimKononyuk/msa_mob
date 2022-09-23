@@ -40,7 +40,7 @@ const TechMaps = () => {
       .catch((err) => {
         console.log('Network error when receiving technical maps ' + err)
         dispatch(setErrorMessage('when receiving technical maps ' + err))
-        dispatch(setIsErrorComponentVisible(true))
+        // dispatch(setIsErrorComponentVisible(true))
       })
   }, [])
 

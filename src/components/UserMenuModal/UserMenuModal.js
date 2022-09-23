@@ -75,7 +75,7 @@ const UsersMenuModal = ({ logOut }) => {
       .catch((err) => {
         console.log('Network error when sending an order for execution ' + err)
         dispatch(setErrorMessage('when sending an order for execution ' + err))
-        dispatch(setIsErrorComponentVisible(true))
+        // dispatch(setIsErrorComponentVisible(true))
       })
   }
 
@@ -106,7 +106,7 @@ const UsersMenuModal = ({ logOut }) => {
         dispatch(
           setErrorMessage('when receiving orders in the user menu ' + err)
         )
-        dispatch(setIsErrorComponentVisible(true))
+        // dispatch(setIsErrorComponentVisible(true))
       })
   }
 
@@ -127,7 +127,7 @@ const UsersMenuModal = ({ logOut }) => {
       .catch((err) => {
         console.log('Network error when sending form data ' + err)
         dispatch(setErrorMessage('when sending form data ' + err))
-        dispatch(setIsErrorComponentVisible(true))
+        // dispatch(setIsErrorComponentVisible(true))
       })
       .finally(() => {
         setIsModalGetDetails(false)

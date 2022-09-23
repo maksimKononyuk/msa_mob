@@ -36,7 +36,7 @@ const NewMessagesItem = ({ orderId, userId }) => {
       .catch((err) => {
         console.log('Network error when sending a message ' + err)
         dispatch(setErrorMessage('when sending a message ' + err))
-        dispatch(setIsErrorComponentVisible(true))
+        // dispatch(setIsErrorComponentVisible(true))
       })
   }
 

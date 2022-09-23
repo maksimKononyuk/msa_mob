@@ -203,7 +203,7 @@ function Main({ route, navigation }) {
         .catch((err) => {
           console.log('Network error when logging out ' + err)
           dispatch(setErrorMessage('when logging out ' + err))
-          dispatch(setIsErrorComponentVisible(true))
+          // dispatch(setIsErrorComponentVisible(true))
         })
     equipmentBusy(false)
     ordersCount = 0
@@ -244,7 +244,7 @@ function Main({ route, navigation }) {
         dispatch(
           setErrorMessage('when receiving the previous operation ' + err)
         )
-        dispatch(setIsErrorComponentVisible(true))
+        // dispatch(setIsErrorComponentVisible(true))
       })
   }
 
@@ -257,7 +257,7 @@ function Main({ route, navigation }) {
       .catch((err) => {
         console.log('Network error when receiving an active order ' + err)
         dispatch(setErrorMessage('when receiving an active order ' + err))
-        dispatch(setIsErrorComponentVisible(true))
+        // dispatch(setIsErrorComponentVisible(true))
       })
   }
 
@@ -276,7 +276,7 @@ function Main({ route, navigation }) {
       .catch((err) => {
         console.log('Network error at the start of the operation ' + err)
         dispatch(setErrorMessage('at the start of the operation ' + err))
-        dispatch(setIsErrorComponentVisible(true))
+        // dispatch(setIsErrorComponentVisible(true))
       })
     equipmentBusy(true)
   }
@@ -309,7 +309,7 @@ function Main({ route, navigation }) {
       .catch((err) => {
         console.log('Network error at the end of the operation ' + err)
         dispatch(setErrorMessage('at the end of the operation ' + err))
-        dispatch(setIsErrorComponentVisible(true))
+        // dispatch(setIsErrorComponentVisible(true))
       })
     equipmentBusy(false)
     dispatch(setSelectedItemsUnCheced('all'))
@@ -331,7 +331,7 @@ function Main({ route, navigation }) {
         .catch((err) => {
           console.log('Network error when receiving equipment ' + err)
           dispatch(setErrorMessage('when receiving equipment ' + err))
-          dispatch(setIsErrorComponentVisible(true))
+          // dispatch(setIsErrorComponentVisible(true))
         })
     }
   }
@@ -353,7 +353,7 @@ function Main({ route, navigation }) {
           .catch((err) => {
             console.log('Network error when checking order activity ' + err)
             dispatch(setErrorMessage('when checking order activity ' + err))
-            dispatch(setIsErrorComponentVisible(true))
+            // dispatch(setIsErrorComponentVisible(true))
           })
       }, 10000)
     }
@@ -406,7 +406,7 @@ function Main({ route, navigation }) {
                 'when checking for logging out by the administrator ' + err
               )
             )
-            dispatch(setIsErrorComponentVisible(true))
+            // dispatch(setIsErrorComponentVisible(true))
           })
       }, 10000)
     }

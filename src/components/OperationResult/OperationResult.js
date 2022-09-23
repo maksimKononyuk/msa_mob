@@ -45,7 +45,7 @@ const OperationResult = ({ finishOrder, relationArr }) => {
         .catch((err) => {
           console.log('Network error when receiving materials ' + err)
           dispatch(setErrorMessage('when receiving materials ' + err))
-          dispatch(setIsErrorComponentVisible(true))
+          // dispatch(setIsErrorComponentVisible(true))
         })
     }
   }
