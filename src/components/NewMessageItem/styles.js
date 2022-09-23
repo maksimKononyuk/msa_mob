@@ -4,7 +4,7 @@ import { windowWidth } from '../../Constants'
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    paddingHorizontal: 25,
+    paddingHorizontal: 20,
     paddingVertical: 5,
     backgroundColor: '#F1F1F1',
     borderRadius: 30,
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   input: {
-    width: '90%'
+    width: '75%'
   },
   sendButton: {
     width: 46,

@@ -1,11 +1,13 @@
 import axios from 'axios'
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import {
   View,
   TouchableOpacity,
   TextInput,
   Image,
-  Keyboard
+  Keyboard,
+  Text,
+  Platform
 } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -13,9 +15,11 @@ import {
   setErrorMessage,
   setIsErrorComponentVisible
 } from '../../redux/actionCreators'
+import * as DocumentPicker from 'expo-document-picker'
 import sendButton from '../../assets/images/send.png'
 import styles from './styles'
 import { MessagesTranslale } from '../../Constants'
+import SendDocumentModal from '../SendDocumentModal/SendDocumentModal'
 
 const NewMessagesItem = ({ orderId, userId }) => {
   const dispatch = useDispatch()
@@ -23,6 +27,10 @@ const NewMessagesItem = ({ orderId, userId }) => {
 
   const language = useSelector((state) => state.main.language)
   const translate = useMemo(() => new MessagesTranslale(language))
+
+  const [picker, setPicker] = useState(null)
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [uri, setUri] = useState('')
 
   const buttonHendler = () => {
     Keyboard.dismiss()
@@ -40,14 +48,37 @@ const NewMessagesItem = ({ orderId, userId }) => {
       })
   }
 
+  const changeUri = (uri) => {
+    if (Platform.OS === 'android') return encodeURI(`file://${uri}`)
+    else return uri
+  }
+
+  const chooseDocumentInDevice = async () => {
+    const picker = await DocumentPicker.getDocumentAsync()
+    if (picker.type === 'success') {
+      setPicker(picker)
+      setIsModalVisible(true)
+      setUri(changeUri(picker.uri))
+    }
+  }
+
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder={translate.getNewMessageLabel()}
-        value={newMessage}
-        onChangeText={(text) => dispatch(setNewMessage(text))}
-      />
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          style={{ marginRight: 10 }}
+          onPress={chooseDocumentInDevice}
+        >
+          <Text>{String.fromCodePoint(0x1f4ce)}</Text>
+        </TouchableOpacity>
+        <TextInput
+          style={styles.input}
+          placeholder={translate.getNewMessageLabel()}
+          value={newMessage}
+          onChangeText={(text) => dispatch(setNewMessage(text))}
+        />
+      </View>
       <TouchableOpacity
         activeOpacity={0.5}
         style={styles.sendButton}
@@ -55,6 +86,9 @@ const NewMessagesItem = ({ orderId, userId }) => {
       >
         <Image source={sendButton} style={styles.sendButtonImage} />
       </TouchableOpacity>
+      {isModalVisible && (
+        <SendDocumentModal setIsModalVisible={setIsModalVisible} uri={uri} />
+      )}
     </View>
   )
 }
