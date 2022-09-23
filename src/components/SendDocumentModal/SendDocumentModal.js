@@ -72,9 +72,7 @@ const SendDocumentModal = ({
                 source={{ uri }}
               />
             ) : (
-              <View
-                style={{ width: '50%', height: '50%', alignItems: 'center' }}
-              >
+              <View style={styles.fileContainer}>
                 <Image
                   style={styles.image}
                   resizeMode='contain'
