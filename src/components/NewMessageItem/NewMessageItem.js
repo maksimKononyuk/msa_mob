@@ -32,7 +32,7 @@ const NewMessagesItem = ({ orderId, userId }) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [uri, setUri] = useState('')
 
-  const buttonHendler = () => {
+  const messageButtonHandler = () => {
     Keyboard.dismiss()
     axios
       .post('order_worker_new_message', {
@@ -57,19 +57,15 @@ const NewMessagesItem = ({ orderId, userId }) => {
     const picker = await DocumentPicker.getDocumentAsync()
     if (picker.type === 'success') {
       setPicker(picker)
-      setIsModalVisible(true)
       setUri(changeUri(picker.uri))
+      setIsModalVisible(true)
     }
   }
 
   return (
     <View style={styles.container}>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <TouchableOpacity
-          activeOpacity={0.5}
-          style={{ marginRight: 10 }}
-          onPress={chooseDocumentInDevice}
-        >
+      <View style={styles.filePickerAndInputContainer}>
+        <TouchableOpacity activeOpacity={0.5} onPress={chooseDocumentInDevice}>
           <Text>{String.fromCodePoint(0x1f4ce)}</Text>
         </TouchableOpacity>
         <TextInput
@@ -82,12 +78,18 @@ const NewMessagesItem = ({ orderId, userId }) => {
       <TouchableOpacity
         activeOpacity={0.5}
         style={styles.sendButton}
-        onPress={() => newMessage && buttonHendler()} // отправка сообщения только если тело сообщения не пустое
+        onPress={() => newMessage && messageButtonHandler()} // отправка сообщения только если тело сообщения не пустое
       >
         <Image source={sendButton} style={styles.sendButtonImage} />
       </TouchableOpacity>
       {isModalVisible && (
-        <SendDocumentModal setIsModalVisible={setIsModalVisible} uri={uri} />
+        <SendDocumentModal
+          setIsModalVisible={setIsModalVisible}
+          uri={uri}
+          fileName={picker.name}
+          orderId={orderId}
+          userId={userId}
+        />
       )}
     </View>
   )

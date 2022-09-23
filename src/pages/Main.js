@@ -50,7 +50,8 @@ import {
   setIsErrorComponentVisible,
   setErrorMessage,
   setShowMaterialsComponent,
-  setMaterialsArr
+  setMaterialsArr,
+  setMessages
 } from '../redux/actionCreators'
 import ErrorComponent from '../components/ErrorComponent/ErrorComponent'
 
@@ -296,6 +297,7 @@ function Main({ route, navigation }) {
         setOperationFinishLoading(false)
         dispatch(setModalVisible(false))
         dispatch(setOrderStarted(false))
+        dispatch(setMessages([]))
         dispatch(setMaterialsArr([]))
         dispatch(setShowMaterialsComponent(false))
         dispatch(setActiveOrder(null))

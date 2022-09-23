@@ -12,7 +12,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   input: {
-    width: '75%'
+    width: '75%',
+    marginLeft: 10
   },
   sendButton: {
     width: 46,
@@ -21,6 +22,10 @@ const styles = StyleSheet.create({
   sendButtonImage: {
     width: '100%',
     height: '100%'
+  },
+  filePickerAndInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center'
   }
 })
 

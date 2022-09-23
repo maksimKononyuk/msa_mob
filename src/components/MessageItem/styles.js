@@ -34,6 +34,11 @@ const styles = StyleSheet.create({
   },
   operationText: {
     width: 100
+  },
+  pickerContainer: {
+    width: 100,
+    height: 100,
+    alignSelf: 'flex-end'
   }
 })
 

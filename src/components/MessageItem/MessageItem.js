@@ -39,9 +39,27 @@ const MessageItem = ({ isYourMessage, userName, operation, date, message }) => {
           {new Date(date).toLocaleString()}
         </Text>
       </View>
-      <Text style={[styles.message, isYourMessage && { color: '#ffffff' }]}>
-        {message}
-      </Text>
+      {message.includes('//firebase') ? (
+        message.toLowerCase().includes('jpg') ||
+        message.toLowerCase().includes('jpeg') ||
+        message.toLowerCase().includes('png') ? (
+          <Image
+            source={{ uri: message }}
+            style={styles.pickerContainer}
+            resizeMode='contain'
+          />
+        ) : (
+          <Image
+            source={require('../../assets/icons/file.png')}
+            style={styles.pickerContainer}
+            resizeMode='contain'
+          />
+        )
+      ) : (
+        <Text style={[styles.message, isYourMessage && { color: '#ffffff' }]}>
+          {message}
+        </Text>
+      )}
     </View>
   )
 }
