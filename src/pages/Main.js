@@ -1,5 +1,11 @@
 import React, { useEffect, useState, useMemo } from 'react'
-import { View, Alert, Modal, ActivityIndicator } from 'react-native'
+import {
+  View,
+  Alert,
+  Modal,
+  ActivityIndicator,
+  BackHandler
+} from 'react-native'
 import Carousel from '../components/Carousel/CarouselComponent'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
@@ -128,12 +134,21 @@ function Main({ route, navigation }) {
   const language = useSelector((state) => state.main.language)
   const translate = useMemo(() => new MainTranslate(language), [language])
 
-  // For BackgroundFetch
+  const backHandler = () => {
+    dispatch(setIsUserMenuModal(true))
+    dispatch(setIsCompleteWorkShiftVisible(true))
+    return true
+  }
 
   useEffect(() => {
     toggleFetchTask()
+    BackHandler.addEventListener('hardwareBackPress', backHandler)
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', backHandler)
+    }
   }, [])
 
+  // For BackgroundFetch
   const toggleFetchTask = async () => {
     await registerBackgroundFetchAsync()
   }
