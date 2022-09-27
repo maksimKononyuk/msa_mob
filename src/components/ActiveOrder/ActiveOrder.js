@@ -26,10 +26,7 @@ const ActiveOrder = () => {
     <View
       style={[
         styles.container,
-        {
-          alignItems: windowWidth <= 480 ? 'center' : 'flex-start',
-          paddingHorizontal: 5
-        }
+        { alignItems: windowWidth <= 480 ? 'center' : 'flex-start' }
       ]}
     >
       {orderStarted ? (
@@ -38,6 +35,12 @@ const ActiveOrder = () => {
             data={order?.order?.list || {}}
             theme={{
               extend: jsonTreeTheme,
+              value: {
+                width: '70%'
+              },
+              valueLabel: {
+                width: '35%'
+              },
               nestedNodeLabel: ({ style }, nodeType, expanded) => ({
                 style: {
                   ...style,
