@@ -13,7 +13,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 10,
     justifyContent: 'space-between',
-    padding: 20
+    paddingVertical: 20,
+    paddingHorizontal: 5
   },
   imageBlock: {
     alignItems: 'center',

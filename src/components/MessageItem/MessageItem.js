@@ -7,7 +7,10 @@ import { useSelector } from 'react-redux'
 
 const MessageItem = ({ isYourMessage, userName, operation, date, message }) => {
   const language = useSelector((state) => state.main.language)
-  const translate = useMemo(() => new OperationContainerTranslate(language))
+  const translate = useMemo(
+    () => new OperationContainerTranslate(language),
+    [language]
+  )
   return (
     <View
       style={[
@@ -40,21 +43,25 @@ const MessageItem = ({ isYourMessage, userName, operation, date, message }) => {
         </Text>
       </View>
       {message.includes('//firebase') ? (
-        message.toLowerCase().includes('jpg') ||
-        message.toLowerCase().includes('jpeg') ||
-        message.toLowerCase().includes('png') ? (
-          <Image
-            source={{ uri: message }}
-            style={styles.pickerContainer}
-            resizeMode='contain'
-          />
-        ) : (
-          <Image
-            source={require('../../assets/icons/file.png')}
-            style={styles.pickerContainer}
-            resizeMode='contain'
-          />
-        )
+        <View style={styles.fileIconsContainer}>
+          {message.split(',').map((item, index) => (
+            <View key={index} style={styles.pickerBlock}>
+              <Image
+                source={
+                  item.toLowerCase().includes('jpg') ||
+                  item.toLowerCase().includes('jpeg') ||
+                  item.toLowerCase().includes('png')
+                    ? {
+                        uri: item
+                      }
+                    : require('../../assets/icons/file.png')
+                }
+                style={styles.pickerContainer}
+                resizeMode='cover'
+              />
+            </View>
+          ))}
+        </View>
       ) : (
         <Text style={[styles.message, isYourMessage && { color: '#ffffff' }]}>
           {message}
