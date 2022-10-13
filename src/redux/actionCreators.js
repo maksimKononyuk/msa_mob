@@ -46,7 +46,8 @@ import {
   SET_USER,
   SET_USER_MENU_ORDERS,
   SET_IS_EQUIPMENT_LOADING,
-  SET_LANGUAGE
+  SET_LANGUAGE,
+  SET_IS_KEYBOARD_VISIBLE
 } from './actionTypes'
 
 // For mainReducer
@@ -223,6 +224,12 @@ export const setMessages = (messages) => {
   return {
     type: SET_MESSAGES,
     data: messages
+  }
+}
+
+export const setIsKeyboardVisible = () => {
+  return {
+    type: SET_IS_KEYBOARD_VISIBLE
   }
 }
 

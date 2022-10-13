@@ -4,7 +4,8 @@ import {
   Alert,
   Modal,
   ActivityIndicator,
-  BackHandler
+  BackHandler,
+  Text
 } from 'react-native'
 import Carousel from '../components/Carousel/CarouselComponent'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -102,6 +103,9 @@ function Main({ route, navigation }) {
   const sound = useSelector((state) => state.activeOrder?.sound)
 
   const user = useSelector((state) => state.main.user)
+  const isKeyboardVisible = useSelector(
+    (state) => state.messages.isKeyboardVisible
+  )
   const orders = useSelector((state) => state.main.orders)
   const activeOrder = useSelector((state) => state.main.activeOrder)
   const activeIndex = useSelector((state) => state.main.activeIndex)
@@ -494,10 +498,13 @@ function Main({ route, navigation }) {
         </View>
         {windowWidth > 480 && <RightBlock startOrder={startOrder} />}
       </View>
-      {windowWidth <= 480 && orders.length && !activeBarCode ? (
+      {windowWidth <= 480 &&
+      orders.length &&
+      !activeBarCode &&
+      !isKeyboardVisible ? (
         <View style={{ width: '100%' }}>
           <OperationContainer />
-          <View style={{ ...styles.center }}>
+          <View style={styles.center}>
             <Timer />
             <StartFinishButton startOrder={startOrder} />
           </View>

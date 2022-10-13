@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import {
   View,
   TouchableOpacity,
@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   setNewMessage,
   setErrorMessage,
+  setIsKeyboardVisible,
   setIsErrorComponentVisible
 } from '../../redux/actionCreators'
 import * as DocumentPicker from 'expo-document-picker'
@@ -21,7 +22,7 @@ import styles from './styles'
 import { MessagesTranslale } from '../../Constants'
 import SendDocumentModal from '../SendDocumentModal/SendDocumentModal'
 
-const NewMessagesItem = ({ orderId, userId }) => {
+const NewMessagesItem = ({ orderId, userId, messageScrollToEnd }) => {
   const dispatch = useDispatch()
   const newMessage = useSelector((state) => state.newMessageItem.newMessage)
 
@@ -31,6 +32,21 @@ const NewMessagesItem = ({ orderId, userId }) => {
   const [picker, setPicker] = useState(null)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [uri, setUri] = useState('')
+
+  useEffect(() => {
+    const keyboardShow = Keyboard.addListener('keyboardDidShow', () => {
+      messageScrollToEnd()
+      dispatch(setIsKeyboardVisible())
+    })
+    const keyboardHide = Keyboard.addListener('keyboardDidHide', () => {
+      dispatch(setIsKeyboardVisible())
+    })
+
+    return () => {
+      keyboardShow.remove()
+      keyboardHide.remove()
+    }
+  }, [])
 
   const messageButtonHandler = () => {
     Keyboard.dismiss()

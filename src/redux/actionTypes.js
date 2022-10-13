@@ -30,6 +30,7 @@ export const SET_IS_USER_MENU_MODAL = 'SET_IS_USER_MENU_MODAL'
 // For messagesReducer
 
 export const SET_MESSAGES = 'SET_MESSAGES'
+export const SET_IS_KEYBOARD_VISIBLE = 'SET_IS_KEYBOARD_VISIBLE'
 
 // For activeOrderReducer
 

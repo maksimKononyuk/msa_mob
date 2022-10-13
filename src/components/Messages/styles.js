@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 0
   },
-  notMessageText: {
+  noMessageText: {
     fontFamily: 'Roboto',
     fontSize: 18,
     padding: 15

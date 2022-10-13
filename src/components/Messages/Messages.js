@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import { View, Text, ScrollView } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import {
@@ -21,6 +21,12 @@ const Messages = () => {
   const language = useSelector((state) => state.main.language)
   const translate = useMemo(() => new MessagesTranslale(language), [language])
 
+  const messageScroll = useRef(null)
+
+  const messageScrollToEnd = () => {
+    messageScroll.current.scrollToEnd()
+  }
+
   useEffect(() => {
     const getMessage = setInterval(() => {
       axios
@@ -41,9 +47,9 @@ const Messages = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scroll}>
+      <ScrollView style={styles.scroll} ref={messageScroll}>
         {messages.length === 0 ? (
-          <Text style={styles.notMessageText}>{translate.getInfoLabel()}</Text>
+          <Text style={styles.noMessageText}>{translate.getInfoLabel()}</Text>
         ) : (
           messages.map((item, index) => {
             return (
@@ -62,7 +68,11 @@ const Messages = () => {
       </ScrollView>
 
       <View style={styles.newMessageItemContainer}>
-        <NewMessagesItem orderId={activeOrder._id} userId={userId} />
+        <NewMessagesItem
+          orderId={activeOrder._id}
+          userId={userId}
+          messageScrollToEnd={messageScrollToEnd}
+        />
       </View>
     </View>
   )
