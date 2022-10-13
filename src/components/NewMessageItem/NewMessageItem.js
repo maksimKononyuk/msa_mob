@@ -29,9 +29,11 @@ const NewMessagesItem = ({ orderId, userId, messageScrollToEnd }) => {
   const language = useSelector((state) => state.main.language)
   const translate = useMemo(() => new MessagesTranslale(language))
 
-  const [picker, setPicker] = useState(null)
+  const [filesForSend, setFilesForSend] = useState({
+    fileName: '',
+    fileUri: ''
+  })
   const [isModalVisible, setIsModalVisible] = useState(false)
-  const [uri, setUri] = useState('')
 
   useEffect(() => {
     const keyboardShow = Keyboard.addListener('keyboardDidShow', () => {
@@ -64,6 +66,7 @@ const NewMessagesItem = ({ orderId, userId, messageScrollToEnd }) => {
       })
   }
 
+  //исправление недочетов в библиотеке
   const changeUri = (uri) => {
     if (Platform.OS === 'android') return encodeURI(`file://${uri}`)
     else return uri
@@ -72,8 +75,11 @@ const NewMessagesItem = ({ orderId, userId, messageScrollToEnd }) => {
   const chooseDocumentInDevice = async () => {
     const picker = await DocumentPicker.getDocumentAsync()
     if (picker.type === 'success') {
-      setPicker(picker)
-      setUri(changeUri(picker.uri))
+      setFilesForSend((prev) => ({
+        ...prev,
+        fileName: picker.name,
+        fileUri: changeUri(picker.uri)
+      }))
       setIsModalVisible(true)
     }
   }
@@ -101,8 +107,8 @@ const NewMessagesItem = ({ orderId, userId, messageScrollToEnd }) => {
       {isModalVisible && (
         <SendDocumentModal
           setIsModalVisible={setIsModalVisible}
-          uri={uri}
-          fileName={picker.name}
+          uri={filesForSend.fileUri}
+          fileName={filesForSend.fileName}
           orderId={orderId}
           userId={userId}
         />
