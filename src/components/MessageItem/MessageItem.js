@@ -4,6 +4,7 @@ import avatar from '../../assets/images/avatar_local.png'
 import styles from './styles'
 import { OperationContainerTranslate } from '../../Constants'
 import { useSelector } from 'react-redux'
+import MessageFile from '../MessageFile/MessageFile'
 
 const MessageItem = ({ isYourMessage, userName, operation, date, message }) => {
   const language = useSelector((state) => state.main.language)
@@ -45,21 +46,7 @@ const MessageItem = ({ isYourMessage, userName, operation, date, message }) => {
       {message.includes('//firebase') ? (
         <View style={styles.fileIconsContainer}>
           {message.split(',').map((item, index) => (
-            <View key={index} style={styles.pickerBlock}>
-              <Image
-                source={
-                  item.toLowerCase().includes('jpg') ||
-                  item.toLowerCase().includes('jpeg') ||
-                  item.toLowerCase().includes('png')
-                    ? {
-                        uri: item
-                      }
-                    : require('../../assets/icons/file.png')
-                }
-                style={styles.pickerContainer}
-                resizeMode='cover'
-              />
-            </View>
+            <MessageFile uri={item} key={index} />
           ))}
         </View>
       ) : (

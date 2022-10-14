@@ -39,16 +39,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     flexWrap: 'wrap'
-  },
-  pickerBlock: {
-    width: 100,
-    height: 100,
-    marginLeft: 5,
-    marginBottom: 5
-  },
-  pickerContainer: {
-    width: '100%',
-    height: '100%'
   }
 })
 
