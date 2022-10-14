@@ -1,5 +1,7 @@
 import React from 'react'
-import { Modal, View, Text, Button, Image } from 'react-native'
+import { Modal, View, Text, Button, Image, ScrollView } from 'react-native'
+import SendDocumentImageItem from '../SendDocumentImageItem/SendDocumentImageItem'
+import NewMessagesItem from '../NewMessageItem/NewMessageItem'
 import styles from './styles'
 
 const SendDocumentModal = ({
@@ -13,37 +15,25 @@ const SendDocumentModal = ({
       <View style={styles.container}>
         <View style={styles.visibleContainer}>
           <View style={styles.imageBlock}>
-            {filesForSend[filesForSend.length - 1].name
-              .toLowerCase()
-              .includes('jpg') ||
-            filesForSend[filesForSend.length - 1].name
-              .toLowerCase()
-              .includes('jpeg') ||
-            filesForSend[filesForSend.length - 1].name
-              .toLowerCase()
-              .includes('png') ? (
-              <Image
-                style={styles.image}
-                resizeMode='contain'
-                source={{ uri: filesForSend[filesForSend.length - 1].uri }}
-              />
+            {filesForSend.length > 1 ? (
+              <ScrollView style={{ width: '100%' }}>
+                {filesForSend.map((item, index) => (
+                  <SendDocumentImageItem
+                    fileName={item.name}
+                    fileUri={item.uri}
+                    key={index}
+                  />
+                ))}
+              </ScrollView>
             ) : (
-              <View style={styles.fileContainer}>
-                <Image
-                  style={styles.image}
-                  resizeMode='contain'
-                  source={require('../../assets/icons/file.png')}
-                />
-                <Text>
-                  {
-                    filesForSend[filesForSend.length - 1].name
-                      .split('.')
-                      .reverse()[0]
-                  }
-                </Text>
-              </View>
+              <SendDocumentImageItem
+                fileName={filesForSend[0].name}
+                fileUri={filesForSend[0].uri}
+                isOneItem={true}
+              />
             )}
           </View>
+          <NewMessagesItem isInSendDocumentModal={true} />
           <View style={styles.buttonsBlock}>
             <Button title='Отмена' onPress={canselModalHandler}></Button>
             <Button title='Отправить' onPress={sendHandler}></Button>

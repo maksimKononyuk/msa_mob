@@ -9,7 +9,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#F1F1F1',
     borderRadius: 30,
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    height: 56
   },
   input: {
     width: '75%',

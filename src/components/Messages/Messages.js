@@ -66,13 +66,8 @@ const Messages = () => {
         )}
         <View style={{ height: 80 }} />
       </ScrollView>
-
       <View style={styles.newMessageItemContainer}>
-        <NewMessagesItem
-          orderId={activeOrder._id}
-          userId={userId}
-          messageScrollToEnd={messageScrollToEnd}
-        />
+        <NewMessagesItem messageScrollToEnd={messageScrollToEnd} />
       </View>
     </View>
   )

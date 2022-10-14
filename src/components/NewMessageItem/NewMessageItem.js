@@ -23,10 +23,12 @@ import { MessagesTranslale } from '../../Constants'
 import SendDocumentModal from '../SendDocumentModal/SendDocumentModal'
 import storage from '../../../firebase'
 
-const NewMessagesItem = ({ orderId, userId, messageScrollToEnd }) => {
+const NewMessagesItem = ({ messageScrollToEnd, isInSendDocumentModal }) => {
   const dispatch = useDispatch()
   const newMessage = useSelector((state) => state.newMessageItem.newMessage)
 
+  const orderId = useSelector((state) => state.main.activeOrder._id)
+  const userId = useSelector((state) => state.main.user?.u_id)
   const language = useSelector((state) => state.main.language)
   const translate = useMemo(() => new MessagesTranslale(language))
 
@@ -36,17 +38,19 @@ const NewMessagesItem = ({ orderId, userId, messageScrollToEnd }) => {
   const [uries, setUries] = useState([])
 
   useEffect(() => {
-    const keyboardShow = Keyboard.addListener('keyboardDidShow', () => {
-      messageScrollToEnd()
-      dispatch(setIsKeyboardVisible())
-    })
-    const keyboardHide = Keyboard.addListener('keyboardDidHide', () => {
-      dispatch(setIsKeyboardVisible())
-    })
+    if (!isInSendDocumentModal) {
+      const keyboardShow = Keyboard.addListener('keyboardDidShow', () => {
+        messageScrollToEnd()
+        dispatch(setIsKeyboardVisible())
+      })
+      const keyboardHide = Keyboard.addListener('keyboardDidHide', () => {
+        dispatch(setIsKeyboardVisible())
+      })
 
-    return () => {
-      keyboardShow.remove()
-      keyboardHide.remove()
+      return () => {
+        keyboardShow.remove()
+        keyboardHide.remove()
+      }
     }
   }, [])
 
@@ -134,6 +138,7 @@ const NewMessagesItem = ({ orderId, userId, messageScrollToEnd }) => {
   }
 
   const sendHandler = async () => {
+    newMessage && messageButtonHandler()
     for (let i = 0; i < filesForSend.length; i++) {
       await sendHandlerOneFile(filesForSend[i].name, filesForSend[i].uri)
     }
@@ -159,23 +164,34 @@ const NewMessagesItem = ({ orderId, userId, messageScrollToEnd }) => {
   return (
     <View style={styles.container}>
       <View style={styles.filePickerAndInputContainer}>
-        <TouchableOpacity activeOpacity={0.5} onPress={chooseDocumentInDevice}>
-          <Text>{String.fromCodePoint(0x1f4ce)}</Text>
-        </TouchableOpacity>
+        {!isInSendDocumentModal && (
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={chooseDocumentInDevice}
+          >
+            <Text>{String.fromCodePoint(0x1f4ce)}</Text>
+          </TouchableOpacity>
+        )}
         <TextInput
           style={styles.input}
-          placeholder={translate.getNewMessageLabel()}
+          placeholder={
+            !isInSendDocumentModal
+              ? translate.getNewMessageLabel()
+              : 'Комментарий'
+          }
           value={newMessage}
           onChangeText={(text) => dispatch(setNewMessage(text))}
         />
       </View>
-      <TouchableOpacity
-        activeOpacity={0.5}
-        style={styles.sendButton}
-        onPress={() => newMessage && messageButtonHandler()} // отправка сообщения только если тело сообщения не пустое
-      >
-        <Image source={sendButton} style={styles.sendButtonImage} />
-      </TouchableOpacity>
+      {!isInSendDocumentModal && (
+        <TouchableOpacity
+          activeOpacity={0.5}
+          style={styles.sendButton}
+          onPress={() => newMessage && messageButtonHandler()} // отправка сообщения только если тело сообщения не пустое
+        >
+          <Image source={sendButton} style={styles.sendButtonImage} />
+        </TouchableOpacity>
+      )}
       {isModalVisible && (
         <SendDocumentModal
           chooseDocumentInDevice={chooseDocumentInDevice}

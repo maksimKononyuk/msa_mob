@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   },
   visibleContainer: {
     width: '90%',
-    height: '60%',
+    height: '80%',
     backgroundColor: '#fff',
     borderRadius: 10,
     justifyContent: 'space-between',
@@ -20,15 +20,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: '70%'
-  },
-  image: {
-    width: '100%',
-    height: '100%'
-  },
-  fileContainer: {
-    width: '50%',
-    height: '50%',
-    alignItems: 'center'
   },
   buttonsBlock: {
     flexDirection: 'row',
