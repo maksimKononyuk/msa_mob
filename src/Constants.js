@@ -523,3 +523,18 @@ export class RightBlockTranslate {
     }
   }
 }
+export class MaterialsTranslate {
+  constructor(lang) {
+    this.lang = lang
+  }
+  getTitleLabel() {
+    switch (this.lang) {
+      case 'en':
+        return 'Materials, semi-finished products, finished products'
+      case 'ru':
+        return 'Материалы, полуфабрикаты, готовая продукция'
+      default:
+        return 'Materials, semi-finished products, finished products'
+    }
+  }
+}
