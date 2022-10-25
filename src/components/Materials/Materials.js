@@ -17,6 +17,7 @@ const Materials = ({ finishOrder }) => {
   const materialsArr = useSelector((state) => state.main.materialsArr)
   const finishOrderParams = useSelector((state) => state.main.finishOrderParams)
 
+  //for translation
   const language = useSelector((state) => state.main.language)
   const translate = useMemo(() => new MaterialsTranslate(language), [language])
 
