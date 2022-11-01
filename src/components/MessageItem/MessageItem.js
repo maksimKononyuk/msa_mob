@@ -24,11 +24,20 @@ const MessageItem = ({ isYourMessage, userName, operation, date, message }) => {
       ]}
     >
       <View style={styles.infoBlock}>
-        <View style={styles.leftPart}>
-          <Image source={avatar} style={styles.avatar} />
-          <Text style={[styles.text, isYourMessage && { color: '#ffffff' }]}>
-            {userName}
-          </Text>
+        <View style={styles.upPart}>
+          <View style={styles.logoAndUserName}>
+            <Image source={avatar} style={styles.avatar} />
+            <Text style={[styles.text, isYourMessage && { color: '#ffffff' }]}>
+              {userName}
+            </Text>
+          </View>
+          <View>
+            <Text style={[styles.text, isYourMessage && { color: '#ffffff' }]}>
+              {new Date(date).toLocaleString()}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.operationBlock}>
           <Text
             style={[
               styles.text,
@@ -39,9 +48,6 @@ const MessageItem = ({ isYourMessage, userName, operation, date, message }) => {
             {translate.getTitleLabel()}: {operation}
           </Text>
         </View>
-        <Text style={[styles.text, isYourMessage && { color: '#ffffff' }]}>
-          {new Date(date).toLocaleString()}
-        </Text>
       </View>
       {message.includes('//firebase') ? (
         <View style={styles.fileIconsContainer}>

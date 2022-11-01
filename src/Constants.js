@@ -444,11 +444,11 @@ export class MainTranslate {
   getFinishOrderAlert() {
     switch (this.lang) {
       case 'en':
-        return 'Your operation has been completed'
+        return 'Your operation has been completed!'
       case 'ru':
-        return 'Ваша операция завершена'
+        return 'Ваша операция завершена!'
       default:
-        return 'Your operation has been completed'
+        return 'Your operation has been completed!'
     }
   }
 }

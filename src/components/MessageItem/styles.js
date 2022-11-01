@@ -9,12 +9,13 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     marginBottom: 15
   },
-  infoBlock: {
+  infoBlock: {},
+  upPart: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'space-between'
   },
-  leftPart: {
+  logoAndUserName: {
     flexDirection: 'row',
     alignItems: 'center'
   },
@@ -27,13 +28,16 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     color: '#8F8F8F'
   },
+  operationBlock: {
+    marginLeft: 20
+  },
   message: {
     marginLeft: 25,
     color: '#282A2D',
     fontSize: windowWidth <= 480 ? 14 : 18
   },
   operationText: {
-    width: 100
+    width: '100%'
   },
   fileIconsContainer: {
     flexDirection: 'row',
