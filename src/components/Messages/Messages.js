@@ -155,7 +155,7 @@ const Messages = () => {
       }
     )
     const urlForUpload = await urlForUploadRes.json()
-    const uploadFileRes = await fetch(urlForUpload.href, {
+    await fetch(urlForUpload.href, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
