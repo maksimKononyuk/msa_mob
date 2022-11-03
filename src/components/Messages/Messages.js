@@ -13,10 +13,13 @@ import MessageItem from '../MessageItem/MessageItem'
 import { MessagesTranslale } from '../../Constants'
 import NewMessagesItem from '../NewMessageItem/NewMessageItem'
 import SendDocumentModal from '../SendDocumentModal/SendDocumentModal'
-import storage from '../../../firebase'
+// import storage from '../../../firebase'
 import styles from './styles'
 
 const Messages = () => {
+  const OAuth_token =
+    'y0_AgAAAAAQghR9AAiMSQAAAADS296d02g2EPl7SsWjQ9EqWLwnq3R9u7c'
+
   const dispatch = useDispatch()
   const activeOrder = useSelector((state) => state.main.activeOrder)
   const userId = useSelector((state) => state.main.user?.u_id)
@@ -116,32 +119,56 @@ const Messages = () => {
     })
   }
 
-  const sendHandlerOneFile = async (name, uri) => {
-    const blob = await fileToBiteStream(uri)
-    const storageRef = storage.ref(`${id}/emploees/${name}`).put(blob)
-    storageRef.on(
-      'state_changed',
-      (snapshot) => {
-        uploadValue = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-      },
-      (err) => {
-        console.log(err)
-      },
-      () => {
-        storageRef.snapshot.ref.getDownloadURL().then((url) => {
-          setUries((prev) => {
-            prev.push(url)
-            return prev
-          })
-        })
+  const mkDir = async () => {
+    await fetch(`https://cloud-api.yandex.net/v1/disk/resources?path=/${id}/`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization:
+          'OAuth y0_AgAAAAAQghR9AAiMSQAAAADS296d02g2EPl7SsWjQ9EqWLwnq3R9u7c'
+      }
+    })
+    await fetch(
+      `https://cloud-api.yandex.net/v1/disk/resources?path=/${id}/emploees/`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization:
+            'OAuth y0_AgAAAAAQghR9AAiMSQAAAADS296d02g2EPl7SsWjQ9EqWLwnq3R9u7c'
+        }
       }
     )
+    return `${id}/emploees`
+  }
+
+  const sendHandlerOneFile = async (dir, file) => {
+    const urlForUploadRes = await fetch(
+      `https://cloud-api.yandex.net/v1/disk/resources/upload?path=${dir}/${file.name}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization:
+            'OAuth y0_AgAAAAAQghR9AAiMSQAAAADS296d02g2EPl7SsWjQ9EqWLwnq3R9u7c'
+        }
+      }
+    )
+    const urlForUpload = await urlForUploadRes.json()
+    const uploadFileRes = await fetch(urlForUpload.href, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: file
+    })
   }
 
   const sendHandler = async () => {
-    newMessage && messageButtonHandler()
+    // newMessage && messageButtonHandler()
+    const dir = await mkDir()
     for (let i = 0; i < filesForSend.length; i++) {
-      await sendHandlerOneFile(filesForSend[i].name, filesForSend[i].uri)
+      sendHandlerOneFile(dir, filesForSend[i])
     }
     setIsModalVisible(false)
   }
