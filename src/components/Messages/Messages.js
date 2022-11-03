@@ -13,7 +13,6 @@ import MessageItem from '../MessageItem/MessageItem'
 import { MessagesTranslale } from '../../Constants'
 import NewMessagesItem from '../NewMessageItem/NewMessageItem'
 import SendDocumentModal from '../SendDocumentModal/SendDocumentModal'
-// import storage from '../../../firebase'
 import styles from './styles'
 
 const Messages = () => {
