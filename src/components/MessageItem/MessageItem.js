@@ -49,7 +49,7 @@ const MessageItem = ({ isYourMessage, userName, operation, date, message }) => {
           </Text>
         </View>
       </View>
-      {message.includes('//firebase') ? (
+      {message.includes('https://') ? (
         <View style={styles.fileIconsContainer}>
           {message.split(',').map((item, index) => (
             <MessageFile uri={item} key={index} />

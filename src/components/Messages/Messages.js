@@ -18,7 +18,7 @@ import styles from './styles'
 
 const Messages = () => {
   const OAuth_token =
-    'y0_AgAAAAAQghR9AAiMSQAAAADS296d02g2EPl7SsWjQ9EqWLwnq3R9u7c'
+    'OAuth y0_AgAAAAAQghR9AAiMSQAAAADS296d02g2EPl7SsWjQ9EqWLwnq3R9u7c'
 
   const dispatch = useDispatch()
   const activeOrder = useSelector((state) => state.main.activeOrder)
@@ -124,8 +124,7 @@ const Messages = () => {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        Authorization:
-          'OAuth y0_AgAAAAAQghR9AAiMSQAAAADS296d02g2EPl7SsWjQ9EqWLwnq3R9u7c'
+        Authorization: OAuth_token
       }
     })
     await fetch(
@@ -134,8 +133,7 @@ const Messages = () => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          Authorization:
-            'OAuth y0_AgAAAAAQghR9AAiMSQAAAADS296d02g2EPl7SsWjQ9EqWLwnq3R9u7c'
+          Authorization: OAuth_token
         }
       }
     )
@@ -143,8 +141,25 @@ const Messages = () => {
   }
 
   const sendHandlerOneFile = async (dir, file) => {
-    const urlForUploadRes = await fetch(
-      `https://cloud-api.yandex.net/v1/disk/resources/upload?path=${dir}/${file.name}`,
+    const urlDisk = `https://cloud-api.yandex.net/v1/disk/resources/upload?path=${dir}/${file.name}&overwrite=true`
+    const urlForUploadRes = await fetch(urlDisk, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization:
+          'OAuth y0_AgAAAAAQghR9AAiMSQAAAADS296d02g2EPl7SsWjQ9EqWLwnq3R9u7c'
+      }
+    })
+    const urlForUpload = await urlForUploadRes.json()
+    await fetch(urlForUpload.href, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: file
+    })
+    const hrefRes = await fetch(
+      `https://cloud-api.yandex.net/v1/disk/resources/download?path=${dir}/${file.name}`,
       {
         method: 'GET',
         headers: {
@@ -154,13 +169,10 @@ const Messages = () => {
         }
       }
     )
-    const urlForUpload = await urlForUploadRes.json()
-    await fetch(urlForUpload.href, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: file
+    const href = await hrefRes.json()
+    setUries((prev) => {
+      prev.push(href.href)
+      return prev
     })
   }
 
