@@ -49,11 +49,25 @@ const MessageItem = ({ isYourMessage, userName, operation, date, message }) => {
           </Text>
         </View>
       </View>
-      {message.includes('https://') ? (
-        <View style={styles.fileIconsContainer}>
-          {message.split(',').map((item, index) => (
-            <MessageFile uri={item} key={index} />
-          ))}
+      {message.includes('%iconLink%') ? (
+        <View style={{ alignItems: 'center' }}>
+          <Text
+            style={[
+              styles.message,
+              { marginLeft: 0, width: '90%' },
+              isYourMessage && { color: '#ffffff' }
+            ]}
+          >
+            {message.split('%iconLink%')[0]}
+          </Text>
+          <View style={styles.fileIconsContainer}>
+            {message
+              .split('%iconLink%')[1]
+              .split(',')
+              .map((item, index) => (
+                <MessageFile uri={item} key={index} />
+              ))}
+          </View>
         </View>
       ) : (
         <Text style={[styles.message, isYourMessage && { color: '#ffffff' }]}>

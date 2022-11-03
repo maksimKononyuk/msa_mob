@@ -2,10 +2,10 @@ import { StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
   pickerBlock: {
-    width: 100,
-    height: 100,
-    marginLeft: 5,
-    marginBottom: 5
+    width: 130,
+    height: 130,
+    marginRight: 15,
+    marginBottom: 10
   },
   pickerContainer: {
     width: '100%',

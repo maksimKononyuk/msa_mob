@@ -60,20 +60,22 @@ const Messages = () => {
 
   useEffect(() => {
     if (uries.length === filesForSend.length && uries.length !== 0) {
-      axios
-        .post('order_worker_new_message', {
-          _id: activeOrder._id,
-          u_id: userId,
-          message: uries.join(',')
-        })
-        .then(() => {
-          dispatch(setNewMessage(''))
-          setFilesForSend([])
-          setUries([])
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+      axios.post('order_worker_new_message', {
+        _id: activeOrder._id,
+        u_id: userId,
+        message: newMessage + '%iconLink%' + uries.join(',')
+      })
+      // .then(() => {
+      //   dispatch(setNewMessage(''))
+      //   setFilesForSend([])
+      //   setUries([])
+      // })
+      // .catch((err) => {
+      //   console.log(err)
+      // })
+      dispatch(setNewMessage(''))
+      setFilesForSend([])
+      setUries([])
     }
   }, [uries.length])
 
@@ -177,12 +179,11 @@ const Messages = () => {
   }
 
   const sendHandler = async () => {
-    // newMessage && messageButtonHandler()
+    setIsModalVisible(false)
     const dir = await mkDir()
     for (let i = 0; i < filesForSend.length; i++) {
       sendHandlerOneFile(dir, filesForSend[i])
     }
-    setIsModalVisible(false)
   }
 
   const chooseDocumentInDevice = async () => {

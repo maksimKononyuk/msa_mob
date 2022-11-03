@@ -41,8 +41,10 @@ const styles = StyleSheet.create({
   },
   fileIconsContainer: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
-    flexWrap: 'wrap'
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap',
+    width: '90%',
+    marginTop: 10
   }
 })
 
