@@ -15,6 +15,8 @@ import NewMessagesItem from '../NewMessageItem/NewMessageItem'
 import SendDocumentModal from '../SendDocumentModal/SendDocumentModal'
 import styles from './styles'
 
+let massageInSendDocumentModal = ''
+
 const Messages = () => {
   const OAuth_token =
     'OAuth y0_AgAAAAAQghR9AAiMSQAAAADS296d02g2EPl7SsWjQ9EqWLwnq3R9u7c'
@@ -39,6 +41,7 @@ const Messages = () => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [uries, setUries] = useState([])
 
+  // Получение сообщений каждую секунду
   useEffect(() => {
     const getMessage = setInterval(() => {
       axios
@@ -57,19 +60,27 @@ const Messages = () => {
     }
   }, [])
 
+  // Скролл сообщений вниз при добавлении нового сообщения
+  useEffect(() => {
+    messageScrollToEnd()
+  }, [messages.length])
+
+  // Отправка сообщиния и ссылок на выбранные файлы на сервер MSA после получения этих ссылок
   useEffect(() => {
     if (uries.length === filesForSend.length && uries.length !== 0) {
-      axios.post('order_worker_new_message', {
-        _id: activeOrder._id,
-        u_id: userId,
-        message: newMessage + '%iconLink%' + uries.join(',')
-      })
-      dispatch(setNewMessage(''))
+      axios
+        .post('order_worker_new_message', {
+          _id: activeOrder._id,
+          u_id: userId,
+          message: massageInSendDocumentModal + '%iconLink%' + uries.join(',')
+        })
+        .then(() => (massageInSendDocumentModal = ''))
       setFilesForSend([])
       setUries([])
     }
   }, [uries.length])
 
+  // Отправка сообщения без выбора файлов
   const messageButtonHandler = () => {
     Keyboard.dismiss()
     axios
@@ -86,32 +97,19 @@ const Messages = () => {
       })
   }
 
-  //исправление недочетов в библиотеке
+  //исправление недочетов в библиотеке (неправильный путь к файлу)
   const changeUri = (uri) => {
     if (Platform.OS === 'android') return encodeURI(`file://${uri}`)
     else return uri
   }
 
+  // Обработчие кнопки "Отмена" окна выбора файлов
   const canselModalHandler = () => {
     setIsModalVisible(false)
     setFilesForSend([])
   }
 
-  const fileToBiteStream = (uri) => {
-    return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest()
-      xhr.onload = function () {
-        resolve(xhr.response)
-      }
-      xhr.onerror = function (e) {
-        reject(new TypeError('Network request failed'))
-      }
-      xhr.responseType = 'blob'
-      xhr.open('GET', uri, true)
-      xhr.send(null)
-    })
-  }
-
+  // создание нужной директории на яндекс диске (одним PUT-запросом создается только одна папка)
   const mkDir = async () => {
     await fetch(`https://cloud-api.yandex.net/v1/disk/resources?path=/${id}/`, {
       method: 'PUT',
@@ -133,17 +131,20 @@ const Messages = () => {
     return `${id}/emploees`
   }
 
+  // Отправка одного файла и получение ссылки на файл
   const sendHandlerOneFile = async (dir, file) => {
+    // Указание ссылки в яндекс диске с именем файла, куда будет загружен файл
     const urlDisk = `https://cloud-api.yandex.net/v1/disk/resources/upload?path=${dir}/${file.name}&overwrite=true`
     const urlForUploadRes = await fetch(urlDisk, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization:
-          'OAuth y0_AgAAAAAQghR9AAiMSQAAAADS296d02g2EPl7SsWjQ9EqWLwnq3R9u7c'
+        Authorization: OAuth_token
       }
     })
     const urlForUpload = await urlForUploadRes.json()
+
+    // Загрузка самого файла по полученной ссылке для загрузки (При загрузке файла токен не требуется)
     await fetch(urlForUpload.href, {
       method: 'PUT',
       headers: {
@@ -151,25 +152,31 @@ const Messages = () => {
       },
       body: file
     })
+
+    // Получение ссылки на загруженный файл
     const hrefRes = await fetch(
       `https://cloud-api.yandex.net/v1/disk/resources/download?path=${dir}/${file.name}`,
       {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization:
-            'OAuth y0_AgAAAAAQghR9AAiMSQAAAADS296d02g2EPl7SsWjQ9EqWLwnq3R9u7c'
+          Authorization: OAuth_token
         }
       }
     )
+    // ссылка на загруженный файл в яндекс диск; передается в сообщении вместе с текстом сообщения для дальнейшего отображения картинки в блоке сообщения
     const href = await hrefRes.json()
+
     setUries((prev) => {
       prev.push(href.href)
       return prev
     })
   }
 
+  // Обработчик кнопки "Отправить сообщение и файлы"
   const sendHandler = async () => {
+    massageInSendDocumentModal = newMessage
+    dispatch(setNewMessage(''))
     setIsModalVisible(false)
     const dir = await mkDir()
     for (let i = 0; i < filesForSend.length; i++) {
@@ -177,13 +184,14 @@ const Messages = () => {
     }
   }
 
+  // Обработчик кнопки выбора файлов
   const chooseDocumentInDevice = async () => {
     setIsModalVisible(false)
     const picker = await DocumentPicker.getDocumentAsync()
     if (picker.type === 'success') {
       const file = {
         name: picker.name,
-        uri: changeUri(picker.uri)
+        uri: changeUri(picker.uri) // исправление пути к файлу
       }
       setFilesForSend((prev) => {
         prev.push(file)
@@ -212,7 +220,7 @@ const Messages = () => {
             )
           })
         )}
-        <View style={{ height: 80 }} />
+        <View style={{ height: 70 }} />
       </ScrollView>
       <View style={styles.newMessageItemContainer}>
         <NewMessagesItem

@@ -21,10 +21,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: '60%'
   },
-  buttonsBlock: {
-    flexDirection: 'row',
+  addButton: {
+    width: 50,
+    height: 50,
+    backgroundColor: '#0080FF',
+    borderRadius: 25,
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'center',
+    alignSelf: 'center'
+  },
+  crossLine: {
+    width: 30,
+    borderWidth: 1,
+    borderColor: '#fff',
+    position: 'absolute'
+  },
+  canselContainer: {
+    alignItems: 'center'
   }
 })
 

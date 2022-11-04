@@ -44,40 +44,19 @@ const SendDocumentModal = ({
           </View>
           <TouchableOpacity
             activeOpacity={0.5}
-            style={{
-              width: 50,
-              height: 50,
-              backgroundColor: '#0080FF',
-              borderRadius: 25,
-              alignItems: 'center',
-              justifyContent: 'center',
-              alignSelf: 'center'
-            }}
+            style={styles.addButton}
             onPress={chooseDocumentInDevice}
           >
+            <View style={styles.crossLine} />
             <View
-              style={{
-                width: 30,
-                borderWidth: 1,
-                borderColor: '#fff',
-                position: 'absolute'
-              }}
-            />
-            <View
-              style={{
-                width: 30,
-                borderWidth: 1,
-                borderColor: '#fff',
-                position: 'absolute',
-                transform: [{ rotate: '90deg' }]
-              }}
+              style={[styles.crossLine, { transform: [{ rotate: '90deg' }] }]}
             />
           </TouchableOpacity>
           <NewMessagesItem
             isInSendDocumentModal={true}
             sendHandler={sendHandler}
           />
-          <View style={{ alignItems: 'center' }}>
+          <View style={styles.canselContainer}>
             <CancelButton handler={canselModalHandler} />
           </View>
         </View>
