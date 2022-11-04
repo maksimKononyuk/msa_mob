@@ -1,7 +1,16 @@
 import React from 'react'
-import { Modal, View, Text, Button, Image, ScrollView } from 'react-native'
+import {
+  Modal,
+  View,
+  Text,
+  Button,
+  Image,
+  ScrollView,
+  TouchableOpacity
+} from 'react-native'
 import SendDocumentImageItem from '../SendDocumentImageItem/SendDocumentImageItem'
 import NewMessagesItem from '../NewMessageItem/NewMessageItem'
+import CancelButton from '../CancelButton/CancelButton'
 import styles from './styles'
 
 const SendDocumentModal = ({
@@ -33,11 +42,43 @@ const SendDocumentModal = ({
               />
             )}
           </View>
-          <NewMessagesItem isInSendDocumentModal={true} />
-          <View style={styles.buttonsBlock}>
-            <Button title='Отмена' onPress={canselModalHandler}></Button>
-            <Button title='Отправить' onPress={sendHandler}></Button>
-            <Button title='Добавить' onPress={chooseDocumentInDevice}></Button>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            style={{
+              width: 50,
+              height: 50,
+              backgroundColor: '#0080FF',
+              borderRadius: 25,
+              alignItems: 'center',
+              justifyContent: 'center',
+              alignSelf: 'center'
+            }}
+            onPress={chooseDocumentInDevice}
+          >
+            <View
+              style={{
+                width: 30,
+                borderWidth: 1,
+                borderColor: '#fff',
+                position: 'absolute'
+              }}
+            />
+            <View
+              style={{
+                width: 30,
+                borderWidth: 1,
+                borderColor: '#fff',
+                position: 'absolute',
+                transform: [{ rotate: '90deg' }]
+              }}
+            />
+          </TouchableOpacity>
+          <NewMessagesItem
+            isInSendDocumentModal={true}
+            sendHandler={sendHandler}
+          />
+          <View style={{ alignItems: 'center' }}>
+            <CancelButton handler={canselModalHandler} />
           </View>
         </View>
       </View>

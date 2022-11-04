@@ -18,7 +18,8 @@ const NewMessagesItem = ({
   messageScrollToEnd,
   isInSendDocumentModal,
   chooseDocumentInDevice,
-  messageButtonHandler
+  messageButtonHandler,
+  sendHandler
 }) => {
   const dispatch = useDispatch()
   const newMessage = useSelector((state) => state.newMessageItem.newMessage)
@@ -43,6 +44,11 @@ const NewMessagesItem = ({
     }
   }, [])
 
+  const buttonHandler = () => {
+    if (isInSendDocumentModal) sendHandler()
+    else newMessage && messageButtonHandler() // отправка сообщения только если тело сообщения не пустое
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.filePickerAndInputContainer}>
@@ -56,24 +62,18 @@ const NewMessagesItem = ({
         )}
         <TextInput
           style={styles.input}
-          placeholder={
-            !isInSendDocumentModal
-              ? translate.getNewMessageLabel()
-              : 'Комментарий'
-          }
+          placeholder={translate.getNewMessageLabel()}
           value={newMessage}
           onChangeText={(text) => dispatch(setNewMessage(text))}
         />
       </View>
-      {!isInSendDocumentModal && (
-        <TouchableOpacity
-          activeOpacity={0.5}
-          style={styles.sendButton}
-          onPress={() => newMessage && messageButtonHandler()} // отправка сообщения только если тело сообщения не пустое
-        >
-          <Image source={sendButton} style={styles.sendButtonImage} />
-        </TouchableOpacity>
-      )}
+      <TouchableOpacity
+        activeOpacity={0.5}
+        style={styles.sendButton}
+        onPress={buttonHandler}
+      >
+        <Image source={sendButton} style={styles.sendButtonImage} />
+      </TouchableOpacity>
     </View>
   )
 }

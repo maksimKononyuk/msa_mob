@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native'
 const styles = StyleSheet.create({
   container: {
     alignSelf: 'center',
-    marginBottom: 10
+    marginBottom: 5
   },
   image: {
     width: '100%',

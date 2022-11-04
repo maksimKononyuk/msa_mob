@@ -9,8 +9,8 @@ const styles = StyleSheet.create({
   },
   visibleContainer: {
     width: '90%',
-    height: '80%',
-    backgroundColor: '#fff',
+    height: '90%',
+    backgroundColor: '#f2f2f2',
     borderRadius: 10,
     justifyContent: 'space-between',
     paddingVertical: 20,
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   imageBlock: {
     alignItems: 'center',
     justifyContent: 'center',
-    height: '70%'
+    height: '60%'
   },
   buttonsBlock: {
     flexDirection: 'row',

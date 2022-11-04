@@ -64,14 +64,6 @@ const Messages = () => {
         u_id: userId,
         message: newMessage + '%iconLink%' + uries.join(',')
       })
-      // .then(() => {
-      //   dispatch(setNewMessage(''))
-      //   setFilesForSend([])
-      //   setUries([])
-      // })
-      // .catch((err) => {
-      //   console.log(err)
-      // })
       dispatch(setNewMessage(''))
       setFilesForSend([])
       setUries([])
