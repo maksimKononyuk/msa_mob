@@ -12,7 +12,8 @@ const MessageFile = ({ uri }) => {
         source={
           uri.toLowerCase().includes('jpg') ||
           uri.toLowerCase().includes('jpeg') ||
-          uri.toLowerCase().includes('png')
+          uri.toLowerCase().includes('png') ||
+          uri.toLowerCase().includes('gif')
             ? {
                 uri: uri
               }
