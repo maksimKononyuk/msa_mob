@@ -9,9 +9,10 @@ import {
   Modal,
   Dimensions
 } from 'react-native'
+import * as ScreenOrientation from 'expo-screen-orientation'
 import AppIntroSlider from 'react-native-app-intro-slider'
 import ImageZoom from 'react-native-image-pan-zoom'
-// import { Video } from 'expo-av'
+import { Video } from 'expo-av'
 import styles from './styles'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -44,23 +45,45 @@ const TechMaps = () => {
       })
   }, [])
 
+  const fullScreenHandler = async () => {
+    if ((await ScreenOrientation.getOrientationLockAsync()) === 3)
+      ScreenOrientation.unlockAsync()
+    else ScreenOrientation.lockAsync(3)
+  }
+
   const renderItem = ({ item }) => {
+    let isVideo = false
+    if (item.file_name.substr(item.file_name.lastIndexOf('.') + 1) === 'mp4')
+      isVideo = true
     return (
       <View style={styles.container}>
         <Text style={styles.mapName}>{item.name}</Text>
-        <TouchableOpacity
-          activeOpacity={0.5}
-          onPress={() => {
-            dispatch(setItem(item))
-            dispatch(setModalVisibleTechMaps(true))
-          }}
-        >
-          <Image
-            source={{ uri: item.file_url }}
-            style={{ height: '100%' }}
+        {isVideo ? (
+          <Video
+            style={{ height: '90%' }}
+            useNativeControls
+            source={{
+              // uri: 'https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'
+              uri: item.file_url
+            }}
             resizeMode='contain'
+            onFullscreenUpdate={fullScreenHandler}
           />
-        </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => {
+              dispatch(setItem(item))
+              dispatch(setModalVisibleTechMaps(true))
+            }}
+          >
+            <Image
+              source={{ uri: item.file_url }}
+              style={{ height: '100%' }}
+              resizeMode='contain'
+            />
+          </TouchableOpacity>
+        )}
       </View>
     )
   }
