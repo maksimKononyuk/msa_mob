@@ -126,7 +126,7 @@ function Auth({ navigation }) {
       ]}
       onLayout={onLayoutRootView}
     >
-      <View style={{ alignSelf: 'flex-end' }}>
+      <View style={{ position: 'absolute', top: 40, right: 30 }}>
         <MenuButton
           buttonColor={'#000'}
           handler={() => setIsSettingsVisible((prev) => !prev)}
