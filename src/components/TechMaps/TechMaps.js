@@ -53,7 +53,13 @@ const TechMaps = () => {
 
   const renderItem = ({ item }) => {
     let isVideo = false
-    if (item.file_name.substr(item.file_name.lastIndexOf('.') + 1) === 'mp4')
+    const expansion = item.file_name.substr(item.file_name.lastIndexOf('.') + 1)
+    if (
+      expansion === 'mp4' ||
+      expansion === '3gp' ||
+      expansion === 'avi' ||
+      expansion === 'mpeg'
+    )
       isVideo = true
     return (
       <View style={styles.container}>
